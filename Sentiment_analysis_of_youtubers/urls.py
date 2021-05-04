@@ -24,4 +24,5 @@ urlpatterns = [
     path('', include('pwa.urls')),
     path('',include('sentiment.urls')),
     path('users/',include('users.urls')),
+    path('about-us/', include('aboutus.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

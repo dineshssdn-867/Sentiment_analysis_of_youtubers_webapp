@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-s+*#qfpq7)afowykv+h#g*&7%&q%wh7*zk2_bw+ir1-nou6&u^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pwa',
     'sentiment',
-    'users'
+    'users',
+    'chartjs',
 ]
 
 MIDDLEWARE = [
@@ -86,14 +87,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
     },
-    'blogs': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'blogs_data.sqlite3')
-    },
-    'sentiments': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'sentiments.sqlite3')
-    },    
 }
 
 
@@ -193,6 +186,4 @@ SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 SECURE_SSL_REDIRECT = False
 
-DATABASE_ROUTERS = ['routers.db_routers.blogsRouter', 'routers.db_routers.sentiment']
 
-CACHE_ROUTER = ['routers.db_routers.blogsRouter', 'routers.db_routers.sentiment']

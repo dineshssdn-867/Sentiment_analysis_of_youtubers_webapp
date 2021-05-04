@@ -4,6 +4,8 @@ from .views import *
 app_name='sentiment'
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
-    path('sentimentform/', FormView.as_view(), name='form'),
-    path('show/', show, name="show")
+    path('show_emotion/', FormViewEmotion.as_view(), name="show_emotion"),
+    path('show_intent/', FormViewIntent.as_view(), name="show_intent"),
+    path('show_emotion_result/', show_emotion, name="show_emotion_result"),
+    path('show_intent_result/', show_intent, name="show_intent_result"),
 ]

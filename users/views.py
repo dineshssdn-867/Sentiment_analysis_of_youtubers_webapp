@@ -1,15 +1,12 @@
+from functools import lru_cache
+import pyrebase
+from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponseRedirect, request
-from django.utils.decorators import method_decorator
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.views.generic import CreateView
 from .forms import RegisterForm
-from django.urls import reverse, reverse_lazy
-from functools import lru_cache
-import pyrebase   
-from django.contrib import messages
-from django.utils.translation import ugettext_lazy as _
-
 
 firebaseConfig = {
   'apiKey': "AIzaSyBdIsGh2PaAlxRjFrSJfOb6cwxEete2YwY",
@@ -31,7 +28,7 @@ class RegisterView(SuccessMessageMixin, CreateView):
     success_message = "Please click the update button to update the profile to give the best public view about yourself"
     success_url = '/'
 
-    @lru_cache
+    @lru_cache(maxsize=None)
     def form_valid(self, form):
         email = form['email'].value()
         password = form['password1'].value()

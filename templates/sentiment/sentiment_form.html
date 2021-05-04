@@ -30,7 +30,7 @@
                                 <h2>Trying to find intent</h2>
                                 <p>There are advances being made in science and technology
                                     everyday, and a good example of this is the</p>
-                                <a href="{% url 'users:login' %}" class="btn_3">Login</a>
+                                <a href="{% url 'sentiment:show_intent' %}" class="btn_3">Intent Analysis</a>
                             </div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                             <div class="login_part_form_iner">
                                 <h3>Emotion Sentiment<br>
                                     Know your emotion just by few details</h3>
-                                <form class="row contact_form" method="post"action="{% url 'sentiment:show' %}"} novalidate="novalidate">
+                                <form class="row contact_form" method="post"action="{% url 'sentiment:show_emotion_result' %}">
                                     {% csrf_token %}
                                     {% if form.errors %}
                                     <div id="errors">
@@ -60,10 +60,10 @@
                                             required placeholder="Channel id of your channel">
                                     </div>                                  
                                     <div class="col-md-12 form-group p_star">
-                                        <input placeholder="The date after you pulbished your videos" class="form-control" name="publish_date_after" type="text" onfocus="(this.type='date')" id="publish_date_after">
+                                        <input placeholder="The date after you pulbished your videos" class="form-control" required name="publish_date_after" type="text" onfocus="(this.type='date')" id="publish_date_after">
                                     </div>
                                     <div class="col-md-12 form-group p_star">
-                                        <input placeholder="The date before you pulbished your videos" class="form-control" name="publish_date_before" type="text" onfocus="(this.type='date')" id="publish_date_before">
+                                        <input placeholder="The date before you pulbished your videos" class="form-control" required name="publish_date_before" type="text" onfocus="(this.type='date')" id="publish_date_before">
                                     </div>
                                     <div class="col-md-12 form-group">
                                         <button type="submit" value="submit" class="btn_3">
