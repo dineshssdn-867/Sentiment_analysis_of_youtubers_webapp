@@ -7,7 +7,7 @@
     <title>YouTubers Sentiment</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '/assets/img/hero/unnamed.jpg' %}">
 
     <!-- CSS here -->
     <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
@@ -30,7 +30,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="{% static '/assets/img/hero/YouTuber_Sentiment.png' %}"  alt="">
+                    <img src="{% static '/assets/img/hero/unnamed.jpg' %}"  alt="">
                 </div>
             </div>
         </div>
@@ -50,8 +50,9 @@
                         <div class="main-menu d-none d-lg-block">
                             <nav>                                                
                                 <ul id="navigation">  
-                                    <li><a href="index.html">Home</a></li>
-                                    <li><a href="shop.html">Sentiment</a></li>
+                                    <li><a href="{% url 'sentiment:home' %}">Home</a></li>
+                                    <li><a href="shop.html">Emotion Sentiment</a></li>
+                                    <li><a href="shop.html">Intent Analysis</a></li>
                                     <li><a href="about.html">about</a></li>
                                     <li><a href="blog.html">Blog</a>
                                         <ul class="submenu">
@@ -65,13 +66,13 @@
                         <!-- Header Right -->
                         <div class="header-right">
                             <ul>
-                                <li>
-                                    <div class="nav-search search-switch">
-                                        <span class="flaticon-search"></span>
-                                    </div>
-                                </li>
-                                <li> <a href="login.html"><span class="flaticon-user"></span></a></li>
-                                <li><a href="cart.html"><span class="flaticon-shopping-cart"></span></a> </li>
+                                {% if user.is_authenticated %}
+                                <li> <a href="#"><span>Hello and Welcome {{user.username}}</span></a></li>
+                                <li><a href="{% url 'users:logout' %}"><span class="flaticon-logout">Logout</span></a> </li>
+                                {% else %}
+                                <li> <a href="{% url 'users:login' %}"><span class="">Login</span></a></li>
+                                <li><a href="{% url 'users:register' %}"><span class="flaticon-register">SignUp</span></a> </li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
