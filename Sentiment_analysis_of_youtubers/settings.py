@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pwa',
-    'sentiment'
+    'sentiment',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -156,14 +157,6 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'my_cache_table',
     },
-    'blogs': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'my_cache_table',
-    },
-    'sentiments': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'my_cache_table',
-    }
 }
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'  # storing session using serializer
@@ -199,3 +192,7 @@ PWA_APP_DEBUG_MODE = True
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 SECURE_SSL_REDIRECT = False
+
+DATABASE_ROUTERS = ['routers.db_routers.blogsRouter', 'routers.db_routers.sentiment']
+
+CACHE_ROUTER = ['routers.db_routers.blogsRouter', 'routers.db_routers.sentiment']
