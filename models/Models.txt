@@ -1,0 +1,4 @@
+Intent Predictor:https://drive.google.com/drive/folders/1-Z0My6GZxv-rzgz-804K3ezj5DX_Qg9a?usp=sharing
+Emotion Predictor: https://drive.google.com/drive/folders/1-KoqgoEsnSxYu6QzmFr1xrpxq_D64whP?usp=sharing
+
+You can download the models from here and than can use on your web app.
