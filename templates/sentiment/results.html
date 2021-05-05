@@ -32,7 +32,18 @@
                         data: {
                             labels: [{% for label in labels %} '{{label}}',{% endfor %}],
                     datasets: [{
+                        label: 'Emotion',
                         data: [{% for prob in probabilites %} {{ prob }}, {% endfor %}],
+                          options: {
+                            plugins: {
+                              legend: {
+                                title: {
+                                  display: true,
+                                  text: 'Legend Title',
+                                }
+                              }
+                            }
+                          },
                         backgroundColor: [
                             'rgba(255, 99, 132, 1)',
                             'rgba(54, 162, 235, 1)',
@@ -53,12 +64,30 @@
                     }]
                         },
                     options: {
+                        plugins: {
+                            legend: {
+                                title: {
+                                    display: true,
+                                    text: 'Emotion Analysis',
+                                }
+                            }
+                        },
                         scales: {
                             yAxes: [{
+                               scaleLabel: {
+                                    display: true,
+                                    labelString: 'probability'
+                                 },
                                 ticks: {
                                     beginAtZero: true
                                 }
-                            }]
+                            }],
+                            xAxes: [{
+                               scaleLabel: {
+                                    display: true,
+                                    labelString: 'Emotion'
+                                 }
+                            }],
                         }
                     }
                     });

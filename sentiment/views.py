@@ -36,6 +36,9 @@ def show_emotion(request):
     publish_date_after = request.POST.get('publish_date_after')
     publish_date_before = request.POST.get('publish_date_before')
     video_id = get_youtube_data(channel_id, publish_date_after, publish_date_before)
+    if len(video_id) == 0:
+        messages.error(request, 'Services are not working properly or invalid data')
+        return HttpResponseRedirect(reverse('sentiment:show_emotion'))
     texts = get_subtitles(video_id)
     if texts == '':
         messages.error(request, 'Please check the subtitles setting of your channel')
@@ -58,16 +61,17 @@ def get_youtube_data(channel_id, publish_date_after, publish_date_before):
     publish_date_after = publish_date_after + 'T00:00:00Z'  # hardcoded publish before date
     publish_date_before = publish_date_before + 'T00:00:00Z'  # hardcoded publish before date
     video_id = []
-    # the required first parameter of the 'get' method is the 'url':
     x = requests.get(
-        'https://www.googleapis.com/youtube/v3/search?key=AIzaSyBvRAePQ1TH5mF86cdfrEfoJ54mEt2PQnA&channelId=' + channel_id + '&part=snippet,id&order=date&publishedBefore=+' + publish_date_before + '&publishedAfter=' + publish_date_after)  # getting the data of channel
-    values = json.loads(x.text)  # converting the string data to json
-    num = len(values['items'])  # getting the number of videos
-    global channel_name
-    channel_name = values['items'][0]['snippet']['channelTitle']  # getting the channel name
-    for i in range(0, num):
-        video_id.append(values['items'][i]['id']['videoId'])  # appending the ids to list
-    return video_id
+        'https://www.googleapis.com/youtube/v3/search?key=AIzaSyDnIqoMPASXgKPkzxlcy4krIPOHtJOJ998&channelId=' + channel_id + '&part=snippet,id&order=date&publishedBefore=+' + publish_date_before + '&publishedAfter=' + publish_date_after)  # getting the data of channel
+    print(x.status_code)
+    if x.status_code == 200:
+        values = json.loads(x.text)# converting the string data to json
+        num = len(values['items'])  # getting the number of videos
+        for i in range(0, num):
+            video_id.append(values['items'][i]['id']['videoId'])  # appending the ids to list
+        return video_id
+    else:
+        return video_id
 
 
 def get_subtitles(video_id):
@@ -121,11 +125,13 @@ def show_intent(request):
     publish_date_after = request.POST.get('publish_date_after')
     publish_date_before = request.POST.get('publish_date_before')
     video_id = get_youtube_data(channel_id, publish_date_after, publish_date_before)
+    if len(video_id) == 0:
+        messages.error(request, 'Services are not working properly or invalid data')
+        return HttpResponseRedirect(reverse('sentiment:show_intent'))
     texts = get_subtitles(video_id)
     if texts == '':
         messages.error(request, 'Please check the subtitles setting of your channel')
-        return HttpResponseRedirect(reverse('sentiment:form'))
-    texts = get_clean_data(texts)
+        return HttpResponseRedirect(reverse('sentiment:show_intent'))
     predicitions = predict_intent(texts)
     intent = {}
     x = []

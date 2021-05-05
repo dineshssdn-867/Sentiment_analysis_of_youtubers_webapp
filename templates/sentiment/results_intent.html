@@ -32,6 +32,7 @@
                         data: {
                             labels: [{% for intent in labels %} '{{intent}}',{% endfor %}],
                     datasets: [{
+                        label: 'Intent',
                         data: [{% for prob in probabilites %} {{ prob }}, {% endfor %}],
                         backgroundColor: [
                             'rgba(255, 99, 132, 1)',
@@ -51,14 +52,32 @@
                             ],
                                 borderWidth: 1
                     }]
-                        },
+                    },
                     options: {
+                        plugins: {
+                            legend: {
+                                title: {
+                                    display: true,
+                                    text: 'Intent Analysis',
+                                }
+                            }
+                        },
                         scales: {
                             yAxes: [{
+                               scaleLabel: {
+                                    display: true,
+                                    labelString: 'probability'
+                                 },
                                 ticks: {
                                     beginAtZero: true
                                 }
-                            }]
+                            }],
+                            xAxes: [{
+                               scaleLabel: {
+                                    display: true,
+                                    labelString: 'Intent'
+                                 }
+                            }],
                         }
                     }
                     });
