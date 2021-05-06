@@ -25,7 +25,7 @@ auth = firebase.auth()
 class RegisterView(SuccessMessageMixin, CreateView):
     template_name = 'users/register.html'
     form_class = RegisterForm
-    success_message = "Please click the update button to update the profile to give the best public view about yourself"
+    success_message = "Please verify your mail for the best services"
     success_url = '/'
 
     @lru_cache(maxsize=None)
