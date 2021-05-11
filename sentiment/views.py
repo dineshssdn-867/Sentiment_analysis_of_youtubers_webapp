@@ -66,6 +66,7 @@ def get_youtube_data(channel_id, publish_date_after, publish_date_before):
     print(x.status_code)
     if x.status_code == 200:
         values = json.loads(x.text)# converting the string data to json
+        print(values)
         num = len(values['items'])  # getting the number of videos
         for i in range(0, num):
             video_id.append(values['items'][i]['id']['videoId'])  # appending the ids to list
@@ -132,19 +133,28 @@ def show_intent(request):
     if texts == '':
         messages.error(request, 'Please check the subtitles setting of your channel')
         return HttpResponseRedirect(reverse('sentiment:show_intent'))
-    predicitions = predict_intent(texts)
-    intent = {}
+    predicitions = predictor_2.predict("Hello",return_proba=True)  # tesing it for youtube subitiles obtained from API services
+    labels = predictor_2.get_classes()
     x = []
     y = []
-    for predicition in predicitions:  # appending different probabilities of predicitions in x and y
-        intent[predicition[0]] = predicition[1]
-    intent = OrderedDict(sorted(intent.items(), key=itemgetter(1)))
+    intent = {}
+
     i = 0
+
+    for predicition in predicitions:  # appending different probabilities of predicitions in x and y
+        intent[labels[i]] = predicition
+        i = i + 1
+
+    intent = OrderedDict(sorted(intent.items(), key=itemgetter(1)))
+
+    i = 0
+    # getting the last 5 values
     for key in intent.keys():
-        if i >= 146:
+        if i >= 148:
             x.append(key)
             y.append(intent[key])
         i = i + 1
+
     context = {
         'labels': x,
         'probabilites': y
