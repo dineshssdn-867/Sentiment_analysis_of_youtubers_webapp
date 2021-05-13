@@ -23,7 +23,7 @@ class HomeView(TemplateView):
 
 
 class FormViewEmotion(TemplateView):
-    template_name = 'sentiment/sentiment_form.html'
+    template_name = 'sentiment/sentiment_emotion_form.html'
 
 
 class FormViewIntent(TemplateView):
@@ -44,12 +44,11 @@ def show_emotion(request):
         messages.error(request, 'Please check the subtitles setting of your channel')
         return HttpResponseRedirect(reverse('sentiment:show_emotion'))
     texts = get_clean_data(texts)
-    predicitions = predict_emotion(texts)
-    emotion_labels = []
+    predicitions = predictor_1.predict(texts, return_proba=True)  # tesing it for youtube subitiles obtained from API services
+    emotion_labels = predictor_1.get_classes()
     emotion_probabilties = []
     for predicition in predicitions:
-        emotion_labels.append(predicition[0])
-        emotion_probabilties.append(predicition[1])
+        emotion_probabilties.append(predicition)
     context = {
         'labels': emotion_labels,
         'probabilites': emotion_probabilties
@@ -65,11 +64,14 @@ def get_youtube_data(channel_id, publish_date_after, publish_date_before):
         'https://www.googleapis.com/youtube/v3/search?key=AIzaSyDnIqoMPASXgKPkzxlcy4krIPOHtJOJ998&channelId=' + channel_id + '&part=snippet,id&order=date&publishedBefore=+' + publish_date_before + '&publishedAfter=' + publish_date_after)  # getting the data of channel
     print(x.status_code)
     if x.status_code == 200:
-        values = json.loads(x.text)# converting the string data to json
-        print(values)
+        values = json.loads(x.text)  # converting the string data to json
         num = len(values['items'])  # getting the number of videos
         for i in range(0, num):
-            video_id.append(values['items'][i]['id']['videoId'])  # appending the ids to list
+            try:
+                video_id.append(values['items'][i]['id']['videoId'])  # appending the ids to list
+            except:
+                video_id = video_id + []
+                continue
         return video_id
     else:
         return video_id
@@ -133,7 +135,8 @@ def show_intent(request):
     if texts == '':
         messages.error(request, 'Please check the subtitles setting of your channel')
         return HttpResponseRedirect(reverse('sentiment:show_intent'))
-    predicitions = predictor_2.predict("Hello",return_proba=True)  # tesing it for youtube subitiles obtained from API services
+    texts = get_clean_data(texts)
+    predicitions = predictor_2.predict(texts, return_proba=True)  # tesing it for youtube subitiles obtained from API services
     labels = predictor_2.get_classes()
     x = []
     y = []
@@ -147,6 +150,7 @@ def show_intent(request):
 
     intent = OrderedDict(sorted(intent.items(), key=itemgetter(1)))
 
+    print(intent)
     i = 0
     # getting the last 5 values
     for key in intent.keys():
@@ -160,3 +164,75 @@ def show_intent(request):
         'probabilites': y
     }
     return render(request, 'sentiment/results_intent.html', context=context)
+
+
+class FormViewVideoEmotion(TemplateView):
+    template_name = 'sentiment/sentiment_form_emotion_video.html'
+
+
+class FormViewVideoIntent(TemplateView):
+    template_name = 'sentiment/sentiment_intent_form_video.html'
+
+
+@login_required(login_url='/users/login')
+def show_intent_video(request):
+    video_id = request.POST.get('video_id')
+    video_id = video_id.split(' ')
+    if len(video_id) == 0:
+        messages.error(request, 'Services are not working properly or invalid data')
+        return HttpResponseRedirect(reverse('sentiment:show_intent'))
+    texts = get_subtitles(video_id)
+    if texts == '':
+        messages.error(request, 'Please check the subtitles setting of your channel')
+        return HttpResponseRedirect(reverse('sentiment:show_intent'))
+    texts = get_clean_data(texts)
+    print(texts)
+    predicitions = predictor_2.predict(texts, return_proba=True)  # tesing it for youtube subitiles obtained from API services
+    labels = predictor_2.get_classes()
+    x = []
+    y = []
+    intent = {}
+    i = 0
+    for predicition in predicitions:  # appending different probabilities of predicitions in x and y
+        intent[labels[i]] = predicition
+        i = i + 1
+
+    intent = OrderedDict(sorted(intent.items(), key=itemgetter(1)))
+    print(intent)
+    i = 0
+    # getting the last 5 values
+    for key in intent.keys():
+        if i >= 148:
+            x.append(key)
+            y.append(intent[key])
+        i = i + 1
+
+    context = {
+        'labels': x,
+        'probabilites': y
+    }
+    return render(request, 'sentiment/results_intent.html', context=context)
+
+
+@login_required(login_url='/users/login')
+def show_emotion_video(request):
+    video_id = request.POST.get('video_id')
+    video_id = video_id.split(' ')
+    if len(video_id) == 0:
+        messages.error(request, 'Services are not working properly or invalid data')
+        return HttpResponseRedirect(reverse('sentiment:show_emotion'))
+    texts = get_subtitles(video_id)
+    if texts == '':
+        messages.error(request, 'Please check the subtitles setting of your channel')
+        return HttpResponseRedirect(reverse('sentiment:show_emotion'))
+    texts = get_clean_data(texts)
+    predicitions = predictor_1.predict(texts, return_proba=True)  # tesing it for youtube subitiles obtained from API services
+    emotion_labels = predictor_1.get_classes()
+    emotion_probabilties = []
+    for predicition in predicitions:
+        emotion_probabilties.append(predicition)
+    context = {
+        'labels': emotion_labels,
+        'probabilites': emotion_probabilties
+    }
+    return render(request, 'sentiment/results.html', context=context)

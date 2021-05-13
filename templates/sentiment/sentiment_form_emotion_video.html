@@ -11,7 +11,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="hero-cap text-center">
-                                <h2>Know Your intent</h2>
+                                <h2>Know Your Emotion for a particular Video</h2>
                             </div>
                         </div>
                     </div>
@@ -27,27 +27,19 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="login_part_text text-center">
                             <div class="login_part_text_iner">
-                                <h2>Trying to find Emotion</h2>
-<<<<<<< HEAD
-                                <p>Know your emotion just by providing few details in a particular timeline</p>
-=======
+                                <h2>Trying to find intent of video</h2>
                                 <p>There are advances being made in science and technology
                                     everyday, and a good example of this is the</p>
->>>>>>> 476d7d2c1572b5717ac63c42fae7209b7f9bedc1
-                                <a href="{% url 'sentiment:show_emotion' %}" class="btn_3">Show Emotion</a>
+                                <a href="{% url 'sentiment:show_intent_video' %}" class="btn_3">Intent Analysis</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <div class="login_part_form">
                             <div class="login_part_form_iner">
-                                <h3>Intent Sentiment<br>
-<<<<<<< HEAD
-                                    Know your intent just by providing few details in a particular timeline</h3>
-=======
-                                    Know your intent just by providing few details</h3>
->>>>>>> 476d7d2c1572b5717ac63c42fae7209b7f9bedc1
-                                <form class="row contact_form" method="post" action="{% url 'sentiment:show_intent_result' %}">
+                                <h3>Emotion Sentiment<br>
+                                    Know your emotion just by few details</h3>
+                                <form class="row contact_form" method="post"action="{% url 'sentiment:show_emotion_video_result' %}">
                                     {% csrf_token %}
                                     {% if form.errors %}
                                     <div id="errors">
@@ -64,18 +56,12 @@
                                     </div>
                                 {% endif %}
                                     <div class="col-md-12 form-group p_star">
-                                        <input type="text" class="form-control" id="channel_id" name="channel_id" value=""
-                                            required placeholder="Channel id of your channel">
-                                    </div>                                  
-                                    <div class="col-md-12 form-group p_star">
-                                        <input placeholder="The date after you pulbished your videos" required class="form-control" name="publish_date_after" type="text" onfocus="(this.type='date')" id="publish_date_after">
-                                    </div>
-                                    <div class="col-md-12 form-group p_star">
-                                        <input placeholder="The date before you pulbished your videos" required class="form-control" name="publish_date_before" type="text" onfocus="(this.type='date')" id="publish_date_before">
+                                        <input type="text" class="form-control" id="video_id" name="video_id" value=""
+                                            required placeholder="video id of particular video">
                                     </div>
                                     <div class="col-md-12 form-group">
                                         <button type="submit" value="submit" class="btn_3">
-                                            Know Your Intent
+                                            Know Your Emotion
                                         </button>
                                     </div>
                                 </form>

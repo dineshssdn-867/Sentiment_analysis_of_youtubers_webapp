@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>YouTubers Sentiment</title>
-    <meta name="description" content="">
+    <meta name="description" content="This app is about helping the youtubers to know about their channel a lot more">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="{% static '/assets/img/hero/unnamed.jpg' %}">
 
@@ -44,32 +44,28 @@
                     <div class="menu-wrapper">
                         <!-- Logo -->
                         <div class="logo">
-                            <a href="{% url 'sentiment:home' %}"><img src="{% static '/assets/img/hero/YouTuber_Sentiment.png' %}" width="400" height="100" alt=""></a>
+                            <a href="{% url 'sentiment:home' %}"><img src="{% static '/assets/img/hero/YouTuber_Sentiment.png' %}"  width="250" height="75" alt="logo"></a>
                         </div>
                         <!-- Main-menu -->
-                        <div class="main-menu d-none d-lg-block">
-                            <nav>                                                
-                                <ul id="navigation">  
-                                    <li><a href="{% url 'sentiment:home' %}">Home</a></li>
-                                    <li><a href="{% url 'sentiment:show_emotion' %}">Emotion Sentiment</a></li>
-                                    <li><a href="{% url 'sentiment:show_intent' %}">Intent Analysis</a></li>
-                                    <li><a href="{% url 'aboutus:about' %}">About Us</a></li>
+                        <div class="main-menu d-none d-md-block">
+                            <nav>
+                                <ul id="navigation">
+                                    <li><a href="{% url 'sentiment:home' %}"><span>Home<span></a></li>
+                                    <li><a href="{% url 'sentiment:show_emotion' %}"><span>Emotion Analysis</span></a></li>
+                                    <li><a href="{% url 'sentiment:show_intent' %}"><span>Intent Analysis</span></a></li>
+                                    <li><a href="{% url 'sentiment:show_emotion_video' %}"><span>Emotion Analysis of video</span></a></li>
+                                    <li><a href="{% url 'sentiment:show_intent_video' %}"><span>Intent Analysis of video</span></a></li>
+                                    <li><a href="{% url 'aboutus:about' %}"><span>About Us</span></a></li>
+                                    {% if user.is_authenticated %}
+                                    <li> <a href="#"><span>Welcome {{user.username}}</span></a></li>
+                                    <li><a href="{% url 'users:logout' %}"><span class="flaticon-logout">Logout</span></a> </li>
+                                    {% else %}
+                                    <li> <a href="{% url 'users:login' %}"><span class="">Login</span></a></li>
+                                    <li><a href="{% url 'users:register' %}"><span class="flaticon-register">SignUp</span></a> </li>
+                                    {% endif %}
                                 </ul>
                             </nav>
                         </div>
-                        <!-- Header Right -->
-                        <div class="header-right">
-                            <ul>
-                                {% if user.is_authenticated %}
-                                <li> <a href="#"><span>Hello and Welcome {{user.username}}</span></a></li>
-                                <li><a href="{% url 'users:logout' %}"><span class="flaticon-logout">Logout</span></a> </li>
-                                {% else %}
-                                <li> <a href="{% url 'users:login' %}"><span class="">Login</span></a></li>
-                                <li><a href="{% url 'users:register' %}"><span class="flaticon-register">SignUp</span></a> </li>
-                                {% endif %}
-                            </ul>
-                        </div>
-                    </div>
                     <!-- Mobile Menu -->
                     <div class="col-12">
                         <div class="mobile_menu d-block d-lg-none"></div>
@@ -94,12 +90,12 @@
                             <div class="single-footer-caption mb-30">
                                 <!-- logo -->
                                 <div class="footer-logo">
-                                    <a href="index.html"><img src="{% static '/assets/img/hero/YouTuber_Sentiment.png' %}" width="400" height="100" alt=""></a>
+                                    <a href="index.html"><img src="{% static '/assets/img/hero/YouTuber_Sentiment.png' %}" width="275" height="85" alt="logo"></a>
                                 </div>
                                 <div class="footer-tittle">
                                     <div class="footer-pera">
-                                        <p>We build new technologies to make life more easier and want to bring the youtubers more close through their subscribers</p>
-                                </div>
+                                        <p>We build new technologies to make life more easier and want to bring the youtubers more close to their subscribers</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -109,9 +105,11 @@
                             <div class="footer-tittle">
                                 <h4>Quick Links</h4>
                                 <ul>
-                                    <li><a href="{% url 'sentiment:home' %}">Home</a></li>
+                                   <li><a href="{% url 'sentiment:home' %}">Home</a></li>
                                     <li><a href="{% url 'sentiment:show_emotion' %}">Emotion Sentiment</a></li>
                                     <li><a href="{% url 'sentiment:show_intent' %}">Intent Analysis</a></li>
+                                    <li><a href="{% url 'sentiment:show_emotion_video' %}">Emotion Analysis of video</a></li>
+                                    <li><a href="{% url 'sentiment:show_intent_video' %}">Intent Analysis of video</a></li>
                                     <li><a href="{% url 'aboutus:about' %}">About Us</a></li>
                                 </ul>
                             </div>
@@ -183,17 +181,17 @@
     <script src="{% static './assets/js/jquery.scrollUp.min.js' %}"></script>
     <script src="{% static './assets/js/jquery.nice-select.min.js' %}"></script>
     <script src="{% static './assets/js/jquery.sticky.js' %}"></script>
-    
+
     <!-- contact js -->
     <script src="{% static './assets/js/contact.js' %}"></script>
     <script src="{% static './assets/js/jquery.form.js' %}"></script>
     <script src="{% static './assets/js/jquery.validate.min.js' %}"></script>
     <script src="{% static './assets/js/mail-script.js' %}"></script>
     <script src="{% static './assets/js/jquery.ajaxchimp.min.js' %}"></script>
-    
-    <!-- Jquery Plugins, main Jquery -->	
+
+    <!-- Jquery Plugins, main Jquery -->
     <script src="{% static './assets/js/plugins.js' %}"></script>
     <script src="{% static './assets/js/main.js' %}"></script>
-    
+
 </body>
 </html>

@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'pwa',
     'sentiment',
     'users',
-    'chartjs',
 ]
 
 MIDDLEWARE = [
