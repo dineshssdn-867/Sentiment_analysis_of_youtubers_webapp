@@ -39,10 +39,13 @@ def show_emotion(request):
     if len(video_id) == 0:
         messages.error(request, 'Services are not working properly or invalid data')
         return HttpResponseRedirect(reverse('sentiment:show_emotion'))
-    texts = get_subtitles(video_id)
+    texts, error_ = get_subtitles(video_id)
     if texts == '':
         messages.error(request, 'Please check the subtitles setting of your channel')
         return HttpResponseRedirect(reverse('sentiment:show_emotion'))
+    if len(error_) > 0:
+        messages.error(request, error_)
+    print(error_)
     texts = get_clean_data(texts)
     predicitions = predictor_1.predict(texts, return_proba=True)  # tesing it for youtube subitiles obtained from API services
     emotion_labels = predictor_1.get_classes()
@@ -53,7 +56,7 @@ def show_emotion(request):
         'labels': emotion_labels,
         'probabilites': emotion_probabilties
     }
-    return render(request, 'sentiment/results.html', context=context)
+    return render(request, 'sentiment/results_emotion.html', context=context)
 
 
 def get_youtube_data(channel_id, publish_date_after, publish_date_before):
@@ -79,20 +82,24 @@ def get_youtube_data(channel_id, publish_date_after, publish_date_before):
 
 def get_subtitles(video_id):
     texts = ''  # adding the subtitles
-    try:
-        for id in video_id:
+    no_subtitles = ''
+    error = ''
+    for id in video_id:
+        try:
             transcript_list = YouTubeTranscriptApi.list_transcripts(id)  # fetching the transcript list
-            # iterate over all available transcripts
-            for transcript in transcript_list:
-                contents = transcript.translate('en').fetch()  # translate the transcript into english
-                for content in contents:
-                    texts = texts + content['text']
-                    texts = texts + " "
-        return texts
-    except:
-        print("Please check the channel or video options regarding subtitles")
-        texts = ''
-        return texts
+        except:
+            no_subtitles = no_subtitles + " " + id
+            continue
+        # iterate over all available transcripts
+        for transcript in transcript_list:
+            contents = transcript.translate('en').fetch()  # translate the transcript into english
+            for content in contents:
+                texts = texts + content['text']
+                texts = texts + " "
+
+    if len(no_subtitles) > 0:
+        error = 'Please check the subtitles setting of this particular video ids as they are skipped' + no_subtitles
+    return texts, error
 
 
 def get_clean_data(texts):
@@ -131,10 +138,12 @@ def show_intent(request):
     if len(video_id) == 0:
         messages.error(request, 'Services are not working properly or invalid data')
         return HttpResponseRedirect(reverse('sentiment:show_intent'))
-    texts = get_subtitles(video_id)
+    texts, error_ = get_subtitles(video_id)
     if texts == '':
         messages.error(request, 'Please check the subtitles setting of your channel')
         return HttpResponseRedirect(reverse('sentiment:show_intent'))
+    if len(error_) > 0:
+        messages.error(request, error_)
     texts = get_clean_data(texts)
     predicitions = predictor_2.predict(texts, return_proba=True)  # tesing it for youtube subitiles obtained from API services
     labels = predictor_2.get_classes()
@@ -150,7 +159,6 @@ def show_intent(request):
 
     intent = OrderedDict(sorted(intent.items(), key=itemgetter(1)))
 
-    print(intent)
     i = 0
     # getting the last 5 values
     for key in intent.keys():
@@ -181,10 +189,12 @@ def show_intent_video(request):
     if len(video_id) == 0:
         messages.error(request, 'Services are not working properly or invalid data')
         return HttpResponseRedirect(reverse('sentiment:show_intent'))
-    texts = get_subtitles(video_id)
+    texts, error_ = get_subtitles(video_id)
     if texts == '':
         messages.error(request, 'Please check the subtitles setting of your channel')
         return HttpResponseRedirect(reverse('sentiment:show_intent'))
+    if len(error_) > 0:
+        messages.error(request, error_)
     texts = get_clean_data(texts)
     print(texts)
     predicitions = predictor_2.predict(texts, return_proba=True)  # tesing it for youtube subitiles obtained from API services
@@ -221,10 +231,12 @@ def show_emotion_video(request):
     if len(video_id) == 0:
         messages.error(request, 'Services are not working properly or invalid data')
         return HttpResponseRedirect(reverse('sentiment:show_emotion'))
-    texts = get_subtitles(video_id)
+    texts, error_ = get_subtitles(video_id)
     if texts == '':
         messages.error(request, 'Please check the subtitles setting of your channel')
         return HttpResponseRedirect(reverse('sentiment:show_emotion'))
+    if len(error_) > 0:
+        messages.error(request, error_)
     texts = get_clean_data(texts)
     predicitions = predictor_1.predict(texts, return_proba=True)  # tesing it for youtube subitiles obtained from API services
     emotion_labels = predictor_1.get_classes()
@@ -235,4 +247,4 @@ def show_emotion_video(request):
         'labels': emotion_labels,
         'probabilites': emotion_probabilties
     }
-    return render(request, 'sentiment/results.html', context=context)
+    return render(request, 'sentiment/results_emotion.html', context=context)

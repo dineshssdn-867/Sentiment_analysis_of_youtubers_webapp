@@ -37,8 +37,8 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="login_part_form">
                             <div class="login_part_form_iner">
-                                <h3>Emotion Sentiment<br>
-                                    Know your emotion just by few details</h3>
+                                <h3>
+                                    Know your emotion just by providing few details</h3>
                                 <form class="row contact_form" method="post"action="{% url 'sentiment:show_emotion_video_result' %}">
                                     {% csrf_token %}
                                     {% if form.errors %}

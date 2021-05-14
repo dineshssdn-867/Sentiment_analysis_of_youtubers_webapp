@@ -7,6 +7,7 @@ urlpatterns = [
     path('show_emotion/', FormViewEmotion.as_view(), name="show_emotion"),
     path('show_intent/', FormViewIntent.as_view(), name="show_intent"),
     path('show_emotion_result/', show_emotion, name="show_emotion_result"),
+    path('show_intent_result/', show_intent, name="show_intent_result"),
     path('show_emotion_video/', FormViewVideoEmotion.as_view(), name="show_emotion_video"),
     path('show_intent_video/', FormViewVideoIntent.as_view(), name="show_intent_video"),
     path('show_emotion_video_result/', show_emotion_video, name="show_emotion_video_result"),
