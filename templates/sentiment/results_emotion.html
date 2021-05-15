@@ -34,7 +34,7 @@
                             labels: [{% for label in labels %} '{{label}}',{% endfor %}],
                     datasets: [{
                         label: 'Emotion',
-                        data: [{% for prob in probabilites %} {{ prob }}, {% endfor %}],
+                        data: [{% for prob in probabilities %} {{ prob }}, {% endfor %}],
                           options: {
                             plugins: {
                               legend: {

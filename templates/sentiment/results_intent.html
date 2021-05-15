@@ -34,7 +34,7 @@
                             labels: [{% for intent in labels %} '{{intent}}',{% endfor %}],
                     datasets: [{
                         label: 'Intent',
-                        data: [{% for prob in probabilites %} {{ prob }}, {% endfor %}],
+                        data: [{% for prob in probabilities %} {{ prob }}, {% endfor %}],
                         backgroundColor: [
                             'rgba(255, 99, 132, 1)',
                             'rgba(54, 162, 235, 1)',

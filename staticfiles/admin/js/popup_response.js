@@ -1,16 +1,1 @@
-/*global opener */
-'use strict';
-{
-    const initData = JSON.parse(document.getElementById('django-admin-popup-response-constants').dataset.popupResponse);
-    switch(initData.action) {
-    case 'change':
-        opener.dismissChangeRelatedObjectPopup(window, initData.value, initData.obj, initData.new_value);
-        break;
-    case 'delete':
-        opener.dismissDeleteRelatedObjectPopup(window, initData.value);
-        break;
-    default:
-        opener.dismissAddRelatedObjectPopup(window, initData.value, initData.obj);
-        break;
-    }
-}
+"use strict";{const e=JSON.parse(document.getElementById("django-admin-popup-response-constants").dataset.popupResponse);switch(e.action){case"change":opener.dismissChangeRelatedObjectPopup(window,e.value,e.obj,e.new_value);break;case"delete":opener.dismissDeleteRelatedObjectPopup(window,e.value);break;default:opener.dismissAddRelatedObjectPopup(window,e.value,e.obj)}}

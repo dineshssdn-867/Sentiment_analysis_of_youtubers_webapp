@@ -1,16 +1,1 @@
-'use strict';
-{
-    const inputTags = ['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'];
-    const modelName = document.getElementById('django-admin-form-add-constants').dataset.modelName;
-    if (modelName) {
-        const form = document.getElementById(modelName + '_form');
-        for (const element of form.elements) {
-            // HTMLElement.offsetParent returns null when the element is not
-            // rendered.
-            if (inputTags.includes(element.tagName) && !element.disabled && element.offsetParent) {
-                element.focus();
-                break;
-            }
-        }
-    }
-}
+"use strict";{const e=["BUTTON","INPUT","SELECT","TEXTAREA"],t=document.getElementById("django-admin-form-add-constants").dataset.modelName;if(t){const n=document.getElementById(t+"_form");for(const t of n.elements)if(e.includes(t.tagName)&&!t.disabled&&t.offsetParent){t.focus();break}}}
