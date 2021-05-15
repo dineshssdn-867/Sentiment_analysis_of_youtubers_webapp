@@ -15,6 +15,7 @@ from django.urls import reverse  # Used in redirecting
 from django.views.generic.base import TemplateView  # Importing template class based views
 from youtube_transcript_api import \
     YouTubeTranscriptApi  # This library will help to fetch to subtitles of youtubers using the video ids
+from django.views.decorators.cache import cache_page  # this library is used for caching
 
 predictor_emotion = ktrain.load_predictor(
     r'C:\Users\Dinesh\Desktop\Sentiment\models\my_new_predictor_emotion')  # Initialize the emotion predictor using ktrain as a global variable to improve performance
@@ -22,23 +23,38 @@ predictor_intent = ktrain.load_predictor(
     r'C:\Users\Dinesh\Desktop\Sentiment\models\my_new_predictor_intent')  # Initialize the intent predictor using ktrain as a global variable to improve performance
 
 
-class HomeView(TemplateView):  # Initializing template for template view
+class CacheMixin(object):
+    cache_timeout = 60 * 30  # seconds
+
+    def get_cache_timeout(self):
+        return self.cache_timeout
+
+    def dispatch(self, *args, **kwargs):
+        if hasattr(self.request, 'user') and self.request.user.is_authenticated:
+            # Logged-in, return the page without caching.
+            return super().dispatch(*args, **kwargs)
+        else:
+            # Unauthenticated user; use caching.
+            return cache_page(self.get_cache_timeout())(super().dispatch)(*args, **kwargs)
+
+
+class HomeView(TemplateView, CacheMixin):  # Initializing template for template view
     template_name = 'sentiment/index.html'
 
 
-class FormViewEmotion(TemplateView):  # Initializing template for template view
+class FormViewEmotion(TemplateView, CacheMixin):  # Initializing template for template view
     template_name = 'sentiment/sentiment_emotion_form.html'
 
 
-class FormViewIntent(TemplateView):  # Initializing template for template view
+class FormViewIntent(TemplateView, CacheMixin):  # Initializing template for template view
     template_name = 'sentiment/sentiment_intent_form.html'
 
 
-class FormViewVideoEmotion(TemplateView):  # Initializing template for template view
+class FormViewVideoEmotion(TemplateView, CacheMixin):  # Initializing template for template view
     template_name = 'sentiment/sentiment_form_emotion_video.html'
 
 
-class FormViewVideoIntent(TemplateView):  # Initializing template for template view
+class FormViewVideoIntent(TemplateView, CacheMixin):  # Initializing template for template view
     template_name = 'sentiment/sentiment_intent_form_video.html'
 
 
@@ -208,7 +224,7 @@ def show_intent(request: AnyStr) -> Any:
                   context=context)  # rendering template with out data using jinja template engine
 
 
-@login_required(login_url='/users/login')   # Checking if the user is authenticated
+@login_required(login_url='/users/login')  # Checking if the user is authenticated
 def show_intent_video(request: AnyStr) -> Any:
     video_ids = request.POST.get('video_id')  # Getting the video id from the form using post method
     video_ids = video_ids.split(' ')  # converting string to list
@@ -255,7 +271,7 @@ def show_intent_video(request: AnyStr) -> Any:
                   context=context)  # rendering template with out data using jinja template engine
 
 
-@login_required(login_url='/users/login')   # Checking if the user is authenticated
+@login_required(login_url='/users/login')  # Checking if the user is authenticated
 def show_emotion_video(request: AnyStr) -> Any:
     video_ids = request.POST.get('video_id')  # Getting the video id from the form using post method
     video_ids = video_ids.split(' ')  # converting string to list

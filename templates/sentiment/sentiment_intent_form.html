@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load cache %}
 
 
 {% block content %}
+{% cache 2500 intent_form-1 %}
+
     <main>
         <!-- Hero Area Start-->
         <div class="slider-area ">
@@ -39,7 +42,9 @@
                                 <h3>
                                   Know your intent just by providing few details in a particular timeline</h3>
                                 <form class="row contact_form" method="post" action="{% url 'sentiment:show_intent_result' %}">
+                                    {% endcache %}
                                     {% csrf_token %}
+                                    {% cache 2500 intent_form-2 %}
                                     {% if form.errors %}
                                     <div id="errors">
                                         <div class="inner">
@@ -77,4 +82,5 @@
             </div>
         </section>
     </main>
- {% endblock %}
+{% endcache %}
+{% endblock %}
