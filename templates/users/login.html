@@ -42,8 +42,9 @@
                                 <form class="row contact_form" method="post" novalidate="novalidate">
                                     {% endcache %}
                                     {% csrf_token %}
-                                    {% cache 2500 login-2 %}
-                                    {% if not user.is_authenticated %}
+                                    {% if user.is_authenticated %}
+                                    <h2 style="color:red">You already Logged in!</h2>
+                                    {% else %}
                                     {% if form.errors %}
                                     <div id="errors">
                                         <div class="inner">
@@ -51,13 +52,14 @@
                                             <ul>
                                                 {% for field in form %}
                                                 {% if field.errors %}
-                                                <li>{{ form.label }} {{ field.errors|striptags }}</li>
+                                                <li>{{ form.label }} : {{ field.errors }}</li>
                                                 {% endif %}
                                                 {% endfor %}
                                             </ul>
                                         </div>
                                     </div>
                                     {% endif %}
+                                    {% cache 2500 login-2 %}
                                     <div class="col-md-12 form-group p_star">
                                         <input type="text" class="form-control" id="name" required="" name="username" value=""
                                             placeholder="Username">
@@ -67,12 +69,11 @@
                                             placeholder="Password">
                                     </div>
                                     <div class="col-md-12 form-group">
-                                        <button type="submit" value="submit" class="btn_3">
+                                    <button type="submit" value="submit" class="btn_3">
                                             log in
-                                        </button>
-                                        {% else %}
-                                        <h2 style="color:red">You already Logged in!</h2>
-                                        {% endif %}
+                                    </button>
+                                     {% endcache %}
+                                     {% endif %}
                                     </div>
                                 </form>
                             </div>
@@ -83,5 +84,4 @@
         </section>
         <!--================login_part end =================-->
     </main>
-{% endcache %}
 {% endblock %}

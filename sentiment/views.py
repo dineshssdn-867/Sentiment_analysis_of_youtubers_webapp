@@ -17,6 +17,7 @@ from youtube_transcript_api import \
     YouTubeTranscriptApi  # This library will help to fetch to subtitles of youtubers using the video ids
 from django.views.decorators.cache import cache_page  # this library is used for caching
 
+
 predictor_emotion = ktrain.load_predictor(
     r'C:\Users\Dinesh\Desktop\Sentiment\models\my_new_predictor_emotion')  # Initialize the emotion predictor using ktrain as a global variable to improve performance
 predictor_intent = ktrain.load_predictor(

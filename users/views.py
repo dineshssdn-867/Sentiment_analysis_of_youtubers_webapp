@@ -5,7 +5,6 @@ from django.contrib.messages.views import SuccessMessageMixin  # Importing succe
 from django.http import HttpResponseRedirect  # If any error caused it will help to redirect
 from django.urls import reverse    # Used in redirecting
 from django.views.generic import CreateView  # class based view
-
 from sentiment.views import CacheMixin # this library is used for caching
 from .forms import RegisterForm  # importing registration form
 from typing import Any, AnyStr, Dict  # Using to define the type
