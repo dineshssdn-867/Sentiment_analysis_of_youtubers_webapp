@@ -18,10 +18,8 @@ from youtube_transcript_api import \
 from django.views.decorators.cache import cache_page  # this library is used for caching
 
 
-predictor_emotion = ktrain.load_predictor(
-    r'C:\Users\Dinesh\Desktop\Sentiment\models\my_new_predictor_emotion')  # Initialize the emotion predictor using ktrain as a global variable to improve performance
-predictor_intent = ktrain.load_predictor(
-    r'C:\Users\Dinesh\Desktop\Sentiment\models\my_new_predictor_intent')  # Initialize the intent predictor using ktrain as a global variable to improve performance
+predictor_emotion = ktrain.load_predictor('models/my_new_predictor_emotion')  # Initialize the emotion predictor using ktrain as a global variable to improve performance
+predictor_intent = ktrain.load_predictor('models/my_new_predictor_intent')  # Initialize the intent predictor using ktrain as a global variable to improve performance
 
 
 class CacheMixin(object):
@@ -234,7 +232,7 @@ def show_intent_video(request: AnyStr) -> Any:
         messages.error(request,
                        'Please check the subtitles setting of your channel')  # adding the errors in messages list which will be shown in message.html template
         return HttpResponseRedirect(
-            reverse('sentiment:show_intent'))  # Redirecting to form page if there are any errors.
+            reverse('sentiment:show_intent_video'))  # Redirecting to form page if there are any errors.
     if len(error_) > 0:  # Some basic validations
         messages.error(request,
                        error_)  # adding the errors in messages list which will be shown in message.html template
@@ -281,7 +279,7 @@ def show_emotion_video(request: AnyStr) -> Any:
         messages.error(request,
                        'Please check the subtitles setting of your channel')  # adding the errors in messages list which will be shown in message.html template
         return HttpResponseRedirect(
-            reverse('sentiment:show_emotion'))  # Redirecting to form page if there are any errors
+            reverse('sentiment:show_emotion_video'))  # Redirecting to form page if there are any errors
     if len(error_) > 0:  # Some basic validations
         messages.error(request,
                        error_)  # adding the errors in messages list which will be shown in message.html template
