@@ -21,7 +21,9 @@
                 </div>
             </div>
         </div>
+        {% endcache %}
        {% include 'messages.html' %}
+       {% cache 2500 intent_form_video-2 %}
         <!-- Hero Area End-->
         <!--================login_part Area =================-->
         <section class="login_part section_padding ">
@@ -59,7 +61,7 @@
                                         </div>
                                     </div>
                                 {% endif %}
-                                    {% cache 2500 intent_form_video-2 %}
+                                    {% cache 2500 intent_form_video-3 %}
                                     <div class="col-md-12 form-group p_star">
                                         <input type="text" class="form-control" id="video_id" name="video_id" value=""
                                             required placeholder="video id of a particular video">
@@ -77,6 +79,5 @@
             </div>
         </section>
     </main>
-
-{% endcache %}
+    {% endcache %}
 {% endblock %}

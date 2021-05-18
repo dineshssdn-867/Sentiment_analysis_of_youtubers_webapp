@@ -5,7 +5,6 @@ from django.contrib.messages.views import SuccessMessageMixin  # Importing succe
 from django.http import HttpResponseRedirect  # If any error caused it will help to redirect
 from django.urls import reverse    # Used in redirecting
 from django.views.generic import CreateView  # class based view
-from sentiment.views import CacheMixin # this library is used for caching
 from .forms import RegisterForm  # importing registration form
 from typing import Any, AnyStr, Dict  # Using to define the type
 
@@ -23,7 +22,7 @@ firebase = pyrebase.initialize_app(firebaseConfig)  # setting the firebase confi
 auth = firebase.auth()  # initializing authentication using firebase
 
 
-class RegisterView(SuccessMessageMixin, CreateView, CacheMixin):
+class RegisterView(SuccessMessageMixin, CreateView):
     template_name = 'users/register.html'
     form_class = RegisterForm  # instantiating the form object
     success_message = "Please verify your mail for the best services"  # A success message
@@ -42,7 +41,7 @@ class RegisterView(SuccessMessageMixin, CreateView, CacheMixin):
             return HttpResponseRedirect(reverse('users:register'))  # Redirecting to form page if there are any errors
 
 
-class UserLoginView(LoginView, CacheMixin):  # Initializing template for login view
+class UserLoginView(LoginView):  # Initializing template for login view
     template_name = 'users/login.html'
 
 

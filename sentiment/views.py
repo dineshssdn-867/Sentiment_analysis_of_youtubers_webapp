@@ -22,44 +22,29 @@ predictor_emotion = ktrain.load_predictor('models/my_new_predictor_emotion')  # 
 predictor_intent = ktrain.load_predictor('models/my_new_predictor_intent')  # Initialize the intent predictor using ktrain as a global variable to improve performance
 
 
-class CacheMixin(object):
-    cache_timeout = 60 * 30  # seconds
-
-    def get_cache_timeout(self):
-        return self.cache_timeout
-
-    def dispatch(self, *args, **kwargs):
-        if hasattr(self.request, 'user') and self.request.user.is_authenticated:
-            # Logged-in, return the page without caching.
-            return super().dispatch(*args, **kwargs)
-        else:
-            # Unauthenticated user; use caching.
-            return cache_page(self.get_cache_timeout())(super().dispatch)(*args, **kwargs)
-
-
-class HomeView(TemplateView, CacheMixin):  # Initializing template for template view
+class HomeView(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/index.html'
 
 
-class FormViewEmotion(TemplateView, CacheMixin):  # Initializing template for template view
+class FormViewEmotion(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/sentiment_emotion_form.html'
 
 
-class FormViewIntent(TemplateView, CacheMixin):  # Initializing template for template view
+class FormViewIntent(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/sentiment_intent_form.html'
 
 
-class FormViewVideoEmotion(TemplateView, CacheMixin):  # Initializing template for template view
+class FormViewVideoEmotion(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/sentiment_form_emotion_video.html'
 
 
-class FormViewVideoIntent(TemplateView, CacheMixin):  # Initializing template for template view
+class FormViewVideoIntent(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/sentiment_intent_form_video.html'
 
 
 @login_required(login_url='/users/login')  # Checking if the user is authenticated
 def show_emotion(request: AnyStr) -> Any:
-    channel_id = request.POST.get('channel_id')  # Getting the channel id from the form using post method
+    channel_id = request.POST.get('channel_id')  # Getting the channel/video id from the form using post method
     publish_date_after = request.POST.get(
         'publish_date_after')  # Getting the publish_date_after from the form using post method
     publish_date_before = request.POST.get(
@@ -76,7 +61,7 @@ def show_emotion(request: AnyStr) -> Any:
     texts, error_ = get_subtitles(video_ids)  # Getting the subtitles using get_subtitles method
     if texts == '':  # Some basic validations
         messages.error(request,
-                       'Please check the subtitles setting of your channel')  # adding the errors in messages list which will be shown in message.html template
+                       'Please check the subtitles setting of your channel/video')  # adding the errors in messages list which will be shown in message.html template
         return HttpResponseRedirect(
             reverse('sentiment:show_emotion'))  # Redirecting to form page if there are any errors
     if len(error_) > 0:  # Some basic validations
@@ -103,9 +88,9 @@ def get_youtube_data(channel_id: AnyStr, publish_date_after: AnyStr, publish_dat
     video_ids = []  # A list for appending the video ids
 
     x = requests.get(
-        'https://www.googleapis.com/youtube/v3/search?key=AIzaSyDnIqoMPASXgKPkzxlcy4krIPOHtJOJ998&channelId='
+        'https://www.googleapis.com/youtube/v3/search?key=AIzaSyDnIqoMPASXgKPkzxlcy4krIPOHtJOJ998&channel/videoId='
         + channel_id + '&part=snippet,id&order=date&publishedBefore=+' + publish_date_before + '&publishedAfter='
-        + publish_date_after)  # getting the data of channel
+        + publish_date_after)  # getting the data of channel/video
 
     if 200 <= x.status_code <= 399:  # some basic validations
         values = json.loads(x.text)  # we will parse the text to json and json to dictionary
@@ -166,7 +151,7 @@ def get_clean_data(texts: AnyStr) -> AnyStr:
 
 @login_required(login_url='/users/login')  # Checking if the user is authenticated
 def show_intent(request: AnyStr) -> Any:
-    channel_id = request.POST.get('channel_id')  # Getting the channel id from the form using post method
+    channel_id = request.POST.get('channel_id')  # Getting the channel/video id from the form using post method
     publish_date_after = request.POST.get(
         'publish_date_after')  # Getting the publish_date_after from the form using post method
     publish_date_before = request.POST.get(
@@ -183,7 +168,7 @@ def show_intent(request: AnyStr) -> Any:
     texts, error_ = get_subtitles(video_ids)  # Getting the subtitles using get_subtitles method
     if texts == '':  # Some basic validations
         messages.error(request,
-                       'Please check the subtitles setting of your channel')  # adding the errors in messages list which will be shown in message.html template
+                       'Please check the subtitles setting of your channel/video')  # adding the errors in messages list which will be shown in message.html template
         return HttpResponseRedirect(
             reverse('sentiment:show_intent'))  # Redirecting to form page if there are any errors.
     if len(error_) > 0:  # Some basic validations
@@ -226,11 +211,14 @@ def show_intent(request: AnyStr) -> Any:
 @login_required(login_url='/users/login')  # Checking if the user is authenticated
 def show_intent_video(request: AnyStr) -> Any:
     video_ids = request.POST.get('video_id')  # Getting the video id from the form using post method
+    if video_ids is None:                     # Some basic validations
+         return HttpResponseRedirect(
+            reverse('sentiment:show_intent_video'))
     video_ids = video_ids.split(' ')  # converting string to list
     texts, error_ = get_subtitles(video_ids)  # Getting the subtitles using get_subtitles method
     if texts == '':  # Some basic validations
         messages.error(request,
-                       'Please check the subtitles setting of your channel')  # adding the errors in messages list which will be shown in message.html template
+                       'Please check the subtitles setting of your channel/video')  # adding the errors in messages list which will be shown in message.html template
         return HttpResponseRedirect(
             reverse('sentiment:show_intent_video'))  # Redirecting to form page if there are any errors.
     if len(error_) > 0:  # Some basic validations
@@ -273,11 +261,14 @@ def show_intent_video(request: AnyStr) -> Any:
 @login_required(login_url='/users/login')  # Checking if the user is authenticated
 def show_emotion_video(request: AnyStr) -> Any:
     video_ids = request.POST.get('video_id')  # Getting the video id from the form using post method
+    if video_ids is None:                     # Some basic validations
+        return HttpResponseRedirect(
+            reverse('sentiment:show_emotion_video'))
     video_ids = video_ids.split(' ')  # converting string to list
     texts, error_ = get_subtitles(video_ids)  # Getting the subtitles using get_subtitles method
     if texts == '':  # Some basic validations
         messages.error(request,
-                       'Please check the subtitles setting of your channel')  # adding the errors in messages list which will be shown in message.html template
+                       'Please check the subtitles setting of your channel/video')  # adding the errors in messages list which will be shown in message.html template
         return HttpResponseRedirect(
             reverse('sentiment:show_emotion_video'))  # Redirecting to form page if there are any errors
     if len(error_) > 0:  # Some basic validations

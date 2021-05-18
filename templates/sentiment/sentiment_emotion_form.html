@@ -19,7 +19,9 @@
                 </div>
             </div>
         </div>
-       {% include 'messages.html' %}
+    {% endcache %} 
+    {% include 'messages.html' %}
+    {% cache 2500 emotion_form-2 %}
         <!-- Hero Area End-->
         <!--================login_part Area =================-->
         <section class="login_part section_padding ">
@@ -56,7 +58,7 @@
                                         </div>
                                     </div>
                                 {% endif %}
-                                {% cache 2500 emotion_form-2 %}
+                                {% cache 2500 emotion_form-3 %}
                                     <div class="col-md-12 form-group p_star">
                                         <input type="text" class="form-control" id="channel_id" name="channel_id" value=""
                                             required placeholder="Channel id of your channel">
