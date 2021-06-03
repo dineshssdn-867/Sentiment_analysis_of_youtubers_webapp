@@ -8,15 +8,15 @@ from django.views.generic import CreateView  # class based view
 from .forms import RegisterForm  # importing registration form
 from typing import Any, AnyStr, Dict  # Using to define the type
 
-firebaseConfig = {  # initializing the firebase config
-    'apiKey': "AIzaSyBdIsGh2PaAlxRjFrSJfOb6cwxEete2YwY",
-    'authDomain': "sentiment-64808.firebaseapp.com",
-    'projectId': "sentiment-64808",
-    'storageBucket': "sentiment-64808.appspot.com",
-    'messagingSenderId': "549019010125",
-    'databaseURL': "https://sentiment-64808-default-rtdb.asia-southeast1.firebasedatabase.app/",
-    'appId': "1:549019010125:web:b064e05aac034c961bc804",
-    'measurementId': "G-71JP8D1W33"
+firebaseConfig = {
+    'apiKey':  os.environ.get('api_key'),
+    'authDomain':  os.environ.get('authdomain'),
+    "databaseURL":  os.environ.get('database'),
+    'projectId': os.environ.get('project_id'),
+    'storageBucket': os.environ.get('storagebucket'),
+    'messagingSenderId': os.environ.get('sender_id'),
+    'appId': os.environ.get('app_id'),
+    'measurementId': os.environ.get('measurement_id')
 }
 firebase = pyrebase.initialize_app(firebaseConfig)  # setting the firebase config
 auth = firebase.auth()  # initializing authentication using firebase
