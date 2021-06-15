@@ -33,6 +33,7 @@ class RegisterView(SuccessMessageMixin, CreateView):
         password = form['password1'].value()  # getting the password from form object
         try:  # some basic validation of e-mail
             user = auth.create_user_with_email_and_password(email, password)  # create the object using e-mail and password
+            login = auth.sign_in_with_email_and_password(email, password)  # login with e-mail and password
             auth.send_email_verification(login['idToken'])  # send the verification mail to the e-mail
             return super().form_valid(form)  # calling the form object of create view
         except:
