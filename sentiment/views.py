@@ -21,6 +21,9 @@ from django.views.decorators.cache import cache_page  # this library is used for
 predictor_emotion = ktrain.load_predictor('models/my_new_predictor_emotion')  # Initialize the emotion predictor using ktrain as a global variable to improve performance
 predictor_intent = ktrain.load_predictor('models/my_new_predictor_intent')  # Initialize the intent predictor using ktrain as a global variable to improve performance
 
+predictor_emotion.batch_size = 128
+predictor_intent.batch_size = 128
+
 
 class HomeView(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/index.html'
