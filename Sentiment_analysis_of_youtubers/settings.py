@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-s+*#qfpq7)afowykv+h#g*&7%&q%wh7*zk2_bw+ir1-nou6&u^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -119,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "Asia/Kolkata"
 
 USE_I18N = True
 
@@ -183,7 +183,7 @@ PWA_APP_SPLASH_SCREEN = [{'src': '/static/images/571658cd2ec465a08e2dc2cf3025802
                           'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'}]'''
 PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'en-US'
-PWA_APP_DEBUG_MODE = True
+PWA_APP_DEBUG_MODE = False
 
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False

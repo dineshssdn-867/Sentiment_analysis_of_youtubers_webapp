@@ -18,6 +18,9 @@ predictor_intent = ktrain.load_predictor(
 predictor_emotion.batch_size = 128
 predictor_intent.batch_size = 128
 
+predictor_emotion.batch_size = 128
+predictor_intent.batch_size = 128
+
 
 class HomeView(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/index.html'
