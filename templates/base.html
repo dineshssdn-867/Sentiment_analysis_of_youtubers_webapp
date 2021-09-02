@@ -1,6 +1,5 @@
 {% load static %}
-{% load cache %}
-{% cache 2500 css_files %}
+
 <!doctype html>
 <html class="no-js' %}" lang="zxx">
 <head>
@@ -24,10 +23,9 @@
     <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
 </head>
-{% endcache %}
+
 
 <body>
-    {% cache 2500 navbar %}
     <!--? Preloader Start -->
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
@@ -57,12 +55,11 @@
                                     <li><a href="{% url 'sentiment:home' %}"><span>Home<span></a></li>
                                     <li><a href="{% url 'sentiment:show_emotion' %}"><span>Emotion Analysis</span></a></li>
                                     <li><a href="{% url 'sentiment:show_intent' %}"><span>Intent Analysis</span></a></li>
-                                    <li><a href="{% url 'sentiment:show_emotion_video' %}"><span>Emotion Analysis of video</span></a></li>
-                                    <li><a href="{% url 'sentiment:show_intent_video' %}"><span>Intent Analysis of video</span></a></li>
+                                    <li><a href="{% url 'sentiment:show_emotion_video_comment' %}"><span>Sentiment of video comments</span></a></li>
+                                    <li><a href="{% url 'sentiment:show_intent_video_comment' %}"><span>Intent of video comments</span></a></li>
                                     <li><a href="{% url 'aboutus:about' %}"><span>About Us</span></a></li>
-                                    {% endcache %}
                                     {% if user.is_authenticated %}
-                                    <li> <a href="#"><span>Welcome {{user.username}}</span></a></li>
+                                    <li> <a href="#"><span>Hi {{user.username}}</span></a></li>
                                     <li><a href="{% url 'users:logout' %}"><span class="flaticon-logout">Logout</span></a> </li>
                                     {% else %}
                                     <li> <a href="{% url 'users:login' %}"><span class="">Login</span></a></li>
@@ -84,7 +81,6 @@
     {% block content %}
 
     {% endblock %}
-    {% cache 2500 footer %}
     <footer>
         <!-- Footer Start-->
         <div class="footer-area footer-padding">
@@ -108,14 +104,7 @@
                     <div class="col-xl-2 col-lg-3 col-md-3 col-sm-5">
                         <div class="single-footer-caption mb-50">
                             <div class="footer-tittle">
-                                <h4>Quick Links</h4>
                                 <ul>
-                                   <li><a href="{% url 'sentiment:home' %}">Home</a></li>
-                                    <li><a href="{% url 'sentiment:show_emotion' %}">Emotion Sentiment</a></li>
-                                    <li><a href="{% url 'sentiment:show_intent' %}">Intent Analysis</a></li>
-                                    <li><a href="{% url 'sentiment:show_emotion_video' %}">Emotion Analysis of video</a></li>
-                                    <li><a href="{% url 'sentiment:show_intent_video' %}">Intent Analysis of video</a></li>
-                                    <li><a href="{% url 'aboutus:about' %}">About Us</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -123,12 +112,16 @@
                     <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
                         <div class="single-footer-caption mb-50">
                             <div class="footer-tittle">
-                                <h4>Support</h4>
+                                <h4>Quick Links</h4>
                                 <ul>
-                                    <li><a href="#">Frequently Asked Questions</a></li>
-                                    <li><a href="#">Terms & Conditions</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                    <li><a href="#">Report a Payment Issue</a></li>
+                                    <li><a href="{% url 'sentiment:home' %}">Home</a></li>
+                                    <li><a href="{% url 'sentiment:show_emotion' %}">Emotion Sentiment</a></li>
+                                    <li><a href="{% url 'sentiment:show_intent' %}">Intent Analysis</a></li>
+                                    <li><a href="{% url 'sentiment:show_emotion_video' %}">Emotion Analysis of video</a></li>
+                                    <li><a href="{% url 'sentiment:show_intent_video' %}">Intent Analysis of video</a></li>
+                                    <li><a href="{% url 'sentiment:show_emotion_video_comment' %}">Sentiment of video comments</span></a></li>
+                                    <li><a href="{% url 'sentiment:show_intent_video_comment' %}">Intent of video comments</a></li>
+                                    <li><a href="{% url 'aboutus:about' %}">About Us</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -152,7 +145,6 @@
         </div>
         <!-- Footer End-->
     </footer>
-    {% endcache %}
     <!--? Search model Begin -->
     <div class="search-model-box">
         <div class="h-100 d-flex align-items-center justify-content-center">
@@ -165,7 +157,6 @@
     <!-- Search model end -->
 
     <!-- JS here -->
-    {% cache 2500 js_files %}
 
     <script src="{% static './assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
     <!-- Jquery, Popper, Bootstrap -->
@@ -199,6 +190,5 @@
     <!-- Jquery Plugins, main Jquery -->
     <script src="{% static './assets/js/plugins.js' %}"></script>
     <script src="{% static './assets/js/main.js' %}"></script>
-    {% endcache %}
 </body>
 </html>

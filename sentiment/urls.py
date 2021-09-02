@@ -12,4 +12,8 @@ urlpatterns = [
     path('show_intent_video/', FormViewVideoIntent.as_view(), name="show_intent_video"),  # Connecting the url route to the view with namespace of show_intent_video
     path('show_emotion_video_result/', show_emotion_video, name="show_emotion_video_result"),  # Connecting the url route to the view with namespace of show_emotion_video_result
     path('show_intent_video_result/', show_intent_video, name="show_intent_video_result"), # Connecting the url route to the view with namespace of show_intent_video_result
+    path('show_emotion_video_comment/', FormCommentViewVideoEmotion.as_view(), name="show_emotion_video_comment"),  # Connecting the url route to the view with namespace of show_emotion_video
+    path('show_intent_video_comment/', FormCommentViewVideoIntent.as_view(), name="show_intent_video_comment"),  # Connecting the url route to the view with namespace of show_intent_video
+    path('show_emotion_video_result_commment/', show_comment_emotion_video, name="show_emotion_video_comment_result"),  # Connecting the url route to the view with namespace of show_emotion_video_result
+    path('show_intent_video_result_comment/', show_comment_intent_video, name="show_intent_video_comment_result"), # Connecting the url route to the view with namespace of show_intent_video_result
 ]

@@ -4,20 +4,24 @@ from django.contrib.auth.views import LoginView, LogoutView   # Importing login 
 from django.contrib.messages.views import SuccessMessageMixin  # Importing successmessagemixin for showing success messages
 from django.http import HttpResponseRedirect  # If any error caused it will help to redirect
 from django.urls import reverse    # Used in redirecting
+from django.utils.decorators import method_decorator
 from django.views.generic import CreateView  # class based view
 from .forms import RegisterForm  # importing registration form
 from typing import Any, AnyStr, Dict  # Using to define the type
+from decouple import config
+from django.contrib.auth.models import User
 
-firebaseConfig = {  # initializing the firebase config
-    'apiKey': "AIzaSyBdIsGh2PaAlxRjFrSJfOb6cwxEete2YwY",
-    'authDomain': "sentiment-64808.firebaseapp.com",
-    'projectId': "sentiment-64808",
-    'storageBucket': "sentiment-64808.appspot.com",
-    'messagingSenderId': "549019010125",
-    'databaseURL': "https://sentiment-64808-default-rtdb.asia-southeast1.firebasedatabase.app/",
-    'appId': "1:549019010125:web:b064e05aac034c961bc804",
-    'measurementId': "G-71JP8D1W33"
-}
+firebaseConfig = {
+     'apiKey': config('apikey'),
+     'authDomain': config('authdomain'),
+     "databaseURL": config('database'),
+     'projectId': config('project_id'),
+     'storageBucket': config('storagebucket'),
+     'messagingSenderId': config('sender_id'),
+     'appId': config('app_id'),
+     'measurementId': config('measurement_id')
+ }
+
 firebase = pyrebase.initialize_app(firebaseConfig)  # setting the firebase config
 auth = firebase.auth()  # initializing authentication using firebase
 
@@ -29,8 +33,10 @@ class RegisterView(SuccessMessageMixin, CreateView):
     success_url = '/'  # Success url after registration
 
     def form_valid(self, form: Dict[AnyStr, Any]) -> Any:     # form validations
-        email = form['email'].value()  # getting the email from form object
+        username = form['email'].value()  # getting the email from form object
         password = form['password1'].value()  # getting the password from form object
+        email = User.objects.filter(username=username).values('email')
+        print(email)
         try:  # some basic validation of e-mail
             user = auth.create_user_with_email_and_password(email, password)  # create the object using e-mail and password
             login = auth.sign_in_with_email_and_password(email, password)  # login with e-mail and password
@@ -44,6 +50,25 @@ class RegisterView(SuccessMessageMixin, CreateView):
 class UserLoginView(LoginView):  # Initializing template for login view
     template_name = 'users/login.html'
 
+    def form_valid(self, form):
+        username = form['username'].value()  # getting the email from form object
+        password = form['password'].value()  # getting the password from form object
+        email = User.objects.filter(username=username).values('email')[0]['email']
+        try:  # some basic validation of e-mail
+            user = auth.sign_in_with_email_and_password(email, password)  # login with e-mail and password
+            user_info = auth.get_account_info(user['idToken'])
+            if user_info['users'][0]['emailVerified']:
+                return super().form_valid(form)
+            else:
+                messages.error(self.request,
+                               'Please verify your email')  # adding the errors in messages list which will be shown in message.html template
+                return HttpResponseRedirect(reverse('users:login'))  # Redirecting to form page if there are any errors
+        except:
+            messages.error(self.request,
+                           'Please check your password and e-mail')  # adding the errors in messages list which will be shown in message.html template
+            return HttpResponseRedirect(reverse('users:login'))  # Redirecting to form page if there are any errors
+
 
 class UserLogoutView(LogoutView):  # Initializing template for logout view
     template_name = 'users/login.html'
+
