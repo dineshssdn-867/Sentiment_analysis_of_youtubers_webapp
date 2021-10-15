@@ -1,26 +1,18 @@
 from collections import OrderedDict  # Importing ordered dict for sorting the dictionary data
 from operator import itemgetter  # Importing item getter for getting the value for key in the dictionary data
 from typing import Any, AnyStr  # Using to define the type
+import json
+import requests
 from django.contrib import messages  # Importing messages module for showing errors
 from django.contrib.auth.decorators import login_required  # Importing decorator for verifying the authenticated user
 from django.http import HttpResponseRedirect  # If any error caused it will help to redirect
 from django.shortcuts import render  # Jinja template engine will parse the contents using render
 from django.urls import reverse  # Used in redirecting
 from django.views.generic.base import TemplateView  # Importing template class based views
-import ktrain
 from .youtube import get_youtube_comment_data, get_clean_data, get_subtitles, get_youtube_data
+from decouple import config
 
-predictor_emotion = ktrain.load_predictor(
-    'models/my_new_predictor_emotion')  # Initialize the emotion predictor using ktrain as a global variable to improve performance
-predictor_intent = ktrain.load_predictor(
-    'models/my_new_predictor_intent')  # Initialize the intent predictor using ktrain as a global variable to improve performance
-
-predictor_emotion.batch_size = 128
-predictor_intent.batch_size = 128
-
-predictor_emotion.batch_size = 128
-predictor_intent.batch_size = 128
-
+API = config('API')
 
 class HomeView(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/index.html'
@@ -82,9 +74,9 @@ def show_emotion(request: AnyStr) -> Any:
                        error_)  # adding the errors in messages list which will be shown in message.html template
 
     texts = get_clean_data(texts)  # Getting the cleaned text using get_clean_data method
-
-    emotion_predictions = predictor_emotion.predict(texts, return_proba=True)  # predicting on the cleaned text
-    emotion_labels = ['ANGER', 'FEAR', 'JOY', 'LOVE', 'SADNESS', 'SURPRISE']  # getting the labels
+    emotion_predictions = requests.post(API+'emotion', json={"text":texts})
+    emotion_labels = emotion_predictions.json()['emotion_labels']  # getting the labels
+    emotion_predictions=emotion_predictions.json()['emotion_predictions']
 
     context = {  # setting the context with our data
         'labels': emotion_labels,
@@ -127,32 +119,13 @@ def show_intent(request: AnyStr) -> Any:
 
     texts = get_clean_data(texts)  # Getting the cleaned text using get_clean_data method
 
-    predictions = predictor_intent.predict(texts, return_proba=True)  # predicting on the cleaned text
-    labels = predictor_intent.get_classes()  # getting the labels
-    print(predictions)
-    intent = []  # empty list for labels
-    intent_probabilities = []  # empty list for probabilities
-    intents = {}  # A dict for labels and probabilities
-
-    iterator = 0  # initializing a iterator to 0
-
-    for prediction in predictions:  # appending different probabilities of predictions in x and y
-        intents[labels[iterator]] = prediction  # appending everything to dict
-        iterator = iterator + 1  # incrementing iterator
-
-    intents = OrderedDict(sorted(intents.items(), key=itemgetter(1)))  # sorting the dict with respect to values
-
-    iterator = 0  # re-initializing a iterator to 0
-
-    for key in intents.keys():
-        if iterator >= 147:
-            intent.append(key)  # appending the labels to main intent list
-            intent_probabilities.append(intents[key])  # appending the probabilities to main intent_probabilities list
-        iterator = iterator + 1  # incrementing iterator
+    intent_predictions = requests.post(API+'intent', json={"text":texts})
+    labels = intent_predictions.json()['intent_labels']  # getting the labels
+    intent_predictions=intent_predictions.json()['intent_predictions']
 
     context = {  # setting the context with our data
-        'labels': intent,
-        'probabilities': intent_probabilities,
+        'labels': labels,
+        'probabilities': intent_predictions,
     }
     return render(request, 'sentiment/results_intent.html',
                   context=context)  # rendering template with out data using jinja template engine
@@ -177,32 +150,13 @@ def show_intent_video(request: AnyStr) -> Any:
 
     texts = get_clean_data(texts)  # Getting the cleaned text using get_clean_data method
 
-    predictions = predictor_intent.predict(texts, return_proba=True)  # predicting on the cleaned text
-    labels = predictor_intent.get_classes()  # getting the labels
-
-    intent = []  # empty list for labels
-    intent_probabilities = []  # empty list for probabilities
-    intents = {}  # A dict for labels and probabilities
-
-    iterator = 0  # initializing a iterator to 0
-
-    for prediction in predictions:  # appending different probabilities of predictions in x and y
-        intents[labels[iterator]] = prediction  # appending everything to dict
-        iterator = iterator + 1  # incrementing iterator
-
-    intents = OrderedDict(sorted(intents.items(), key=itemgetter(1)))  # sorting the dict with respect to values
-
-    iterator = 0  # re-initializing a iterator to 0
-
-    for key in intents.keys():
-        if iterator >= 147:
-            intent.append(key)  # appending the labels to main intent list
-            intent_probabilities.append(intents[key])  # appending the probabilities to main intent_probabilities list
-        iterator = iterator + 1  # incrementing iterator
+    intent_predictions = requests.post(API+'intent', json={"text":texts})
+    labels = intent_predictions.json()['intent_labels']  # getting the labels
+    intent_predictions=intent_predictions.json()['intent_predictions']
 
     context = {  # setting the context with our data
-        'labels': intent,
-        'probabilities': intent_probabilities,
+        'labels': labels,
+        'probabilities': intent_predictions,
     }
     return render(request, 'sentiment/results_intent.html',
                   context=context)  # rendering template with out data using jinja template engine
@@ -226,9 +180,10 @@ def show_emotion_video(request: AnyStr) -> Any:
                        error_)  # adding the errors in messages list which will be shown in message.html template
 
     texts = get_clean_data(texts)  # Getting the cleaned text using get_clean_data method
-    # texts = 'I love you'
-    emotion_predictions = predictor_emotion.predict(texts, return_proba=True)  # predicting on the cleaned text
-    emotion_labels = ['ANGER', 'FEAR', 'JOY', 'LOVE', 'SADNESS', 'SURPRISE']  # getting the labels
+
+    emotion_predictions = requests.post(API+'emotion', json={"text":texts})
+    emotion_labels = emotion_predictions.json()['emotion_labels']  # getting the labels
+    emotion_predictions=emotion_predictions.json()['emotion_predictions']
 
     context = {  # setting the context with our data
         'labels': emotion_labels,
@@ -251,32 +206,13 @@ def show_comment_intent_video(request: AnyStr) -> Any:
         return HttpResponseRedirect(
             reverse('sentiment:show_intent_video'))  # Redirecting to form page if there are any errors.
 
-    predictions = predictor_intent.predict(texts, return_proba=True)  # predicting on the cleaned text
-    labels = predictor_intent.get_classes()  # getting the labels
-
-    intent = []  # empty list for labels
-    intent_probabilities = []  # empty list for probabilities
-    intents = {}  # A dict for labels and probabilities
-
-    iterator = 0  # initializing a iterator to 0
-
-    for prediction in predictions:  # appending different probabilities of predictions in x and y
-        intents[labels[iterator]] = prediction  # appending everything to dict
-        iterator = iterator + 1  # incrementing iterator
-
-    intents = OrderedDict(sorted(intents.items(), key=itemgetter(1)))  # sorting the dict with respect to values
-
-    iterator = 0  # re-initializing a iterator to 0
-
-    for key in intents.keys():
-        if iterator >= 147:
-            intent.append(key)  # appending the labels to main intent list
-            intent_probabilities.append(intents[key])  # appending the probabilities to main intent_probabilities list
-        iterator = iterator + 1  # incrementing iterator
+    intent_predictions = requests.post(API+'intent', json={"text":texts})
+    labels = intent_predictions.json()['intent_labels']  # getting the labels
+    intent_predictions=intent_predictions.json()['intent_predictions']
 
     context = {  # setting the context with our data
-        'labels': intent,
-        'probabilities': intent_probabilities,
+        'labels': labels,
+        'probabilities': intent_predictions,
     }
     return render(request, 'sentiment/results_intent.html',
                   context=context)  # rendering template with out data using jinja template engine
@@ -295,8 +231,10 @@ def show_comment_emotion_video(request: AnyStr) -> Any:
         return HttpResponseRedirect(
             reverse('sentiment:show_emotion_video'))  # Redirecting to form page if there are any errors
 
-    emotion_predictions = predictor_emotion.predict(texts, return_proba=True)  # predicting on the cleaned text
-    emotion_labels = ['ANGER', 'FEAR', 'JOY', 'LOVE', 'SADNESS', 'SURPRISE']  # getting the labels
+    emotion_predictions = requests.post(API+'emotion', json={"text":texts})
+    emotion_labels = emotion_predictions.json()['emotion_labels']  # getting the labels
+    emotion_predictions=emotion_predictions.json()['emotion_predictions']
+
 
     context = {  # setting the context with our data
         'labels': emotion_labels,

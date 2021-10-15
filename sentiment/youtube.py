@@ -2,11 +2,11 @@ import json  # parsing the web data in python dicitionary
 import requests  # Importing requests module for requesting the data from api
 from youtube_transcript_api import \
     YouTubeTranscriptApi  # This library will help to fetch to subtitles of youtubers using the video ids
-from googletrans import Translator, constants
+from translate import Translator
 from typing import Any, AnyStr  # mentioning the types of data
 from .preprocess import get_clean_data
 
-translator = Translator()
+translator = Translator(to_lang="English")
 
 
 def get_youtube_data(channel_id: AnyStr, publish_date_after: AnyStr, publish_date_before: AnyStr) -> list:
@@ -73,7 +73,7 @@ def get_youtube_comment_data(video_id: AnyStr) -> AnyStr:
                 text = text + ' '  # some basic validations
                 continue
         text = get_clean_data(text)
-        text = translator.translate(text)
-        return text.text  # returning the video ids
+        #text = translator.translate(text)
+        return text  # returning the video ids
     else:
         return text  # empty list if any error occurs

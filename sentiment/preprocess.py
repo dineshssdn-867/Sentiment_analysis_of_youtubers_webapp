@@ -4,6 +4,13 @@ from typing import AnyStr
 
 
 def get_clean_data(texts: AnyStr) -> AnyStr:
+    emoji_pattern = re.compile("["
+                               u"\U0001F600-\U0001F64F"  # emoticons
+                               u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+                               u"\U0001F680-\U0001F6FF"  # transport & map symbols
+                               u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                               "]+", flags=re.UNICODE)
+    texts=emoji_pattern.sub(r'', texts)
     texts = texts.lower()  # this function converts text to lower case
     texts = texts.replace(r"(http|@)\S+", "")  # Removing unnecessary stuff
     texts = texts.replace(r"::", ": :")  # Removing unnecessary stuff
