@@ -38,9 +38,9 @@ class RegisterView(SuccessMessageMixin, CreateView):
     success_url = '/'  # Success url after registration
 
     def form_valid(self, form: Dict[AnyStr, Any]) -> Any:  # form validations
-        username = form['email'].value()  # getting the email from form object
+        username = form['username'].value()  # getting the email from form object
+        email = form['email'].value()
         password = form['password1'].value()  # getting the password from form object
-        email = User.objects.filter(username=username).values('email')
         print(email)
         try:  # some basic validation of e-mail
             user = auth.create_user_with_email_and_password(email,

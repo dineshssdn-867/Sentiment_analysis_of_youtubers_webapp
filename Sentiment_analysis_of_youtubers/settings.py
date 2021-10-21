@@ -203,8 +203,8 @@ PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'en-US'
 PWA_APP_DEBUG_MODE = True
 
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
-django_heroku.settings(locals())
-del DATABASES['default']['OPTIONS']['sslmode']
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
+# django_heroku.settings(locals())
+# del DATABASES['default']['OPTIONS']['sslmode']
