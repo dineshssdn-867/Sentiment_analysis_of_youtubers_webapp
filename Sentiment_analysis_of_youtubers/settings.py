@@ -147,20 +147,36 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'my_cache_table',
+        'BACKEND': 'django_bmemcached.memcached.BMemcached',
+        'TIMEOUT': None,
+        'LOCATION': 'mc3.dev.ec2.memcachier.com:11211',
+        'OPTIONS': {
+            'username': config('MEMCACHIER_USERNAME'),
+            'password': config('MEMCACHIER_PASSWORD'),
+        }
     },
-    'cache': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
-    },
-}
+    "cache1": {
+        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+        'LOCATION': 'memcached-19803.c13.us-east-1-3.ec2.cloud.redislabs.com:19803',
+        'OPTIONS': {
+            'binary': True,
+            'username': config('MEMCACHEDCLOUD_USERNAME'),
+            'password': config('MEMCACHEDCLOUD_PASSWORD'),
+        },
+        'behaviors': {
+            'ketama': True,
+        }
+    }
 
+}
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'  # storing session using serializer
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # This is for storing sessions in cache
+SESSION_CACHE_ALIAS = 'default'
 
 PWA_APP_NAME = "Sentiment Analysis of youtubers"
-PWA_APP_DESCRIPTION = "A YouTuber, also known as a YouTube celebrity, YouTube content creator, YouTube Creator or YouTube personality, is a type of videographer or entertainer who produces videos for the video-sharing website YouTube, sometimes being supported by larger networks."
+PWA_APP_DESCRIPTION = "A YouTuber, also known as a YouTube celebrity, YouTube content creator, YouTube Creator or " \
+                      "YouTube personality, is a type of videographer or entertainer who produces videos for the " \
+                      "video-sharing website YouTube, sometimes being supported by larger networks."
 PWA_APP_BACKGROUND_COLOR = '#000000'
 PWA_APP_DISPLAY = 'standalone'
 PWA_APP_SCOPE = '/'
@@ -168,23 +184,24 @@ PWA_APP_ORIENTATION = 'any'
 PWA_APP_START_URL = '/'
 PWA_APP_STATUS_BAR_COLOR = 'default'
 PWA_APP_THEME_COLOR = '#0A0302'
-''' PWA_APP_ICONS = [
+PWA_APP_ICONS = [
     {
-        'src': 'static/img/ds-d-s-purple-letter-logo-design-with-creative-liquid-effect-flowing-vector-illustration-MFR65B.png',
+        'src': '/static/assets/img/hero/unnamed.png',
         'sizes': '160x160', 'purpose': 'any maskable',
-        'src': 'static/img/ds-d-s-purple-letter-logo-design-with-creative-liquid-effect-flowing-vector-illustration-MFR65B.png',
+        'src': '/static/assets/img/hero/unnamed.png',
         'sizes': '512x512', 'purpose': 'any maskable'}
 ]
 PWA_APP_ICONS_APPLE = [
     {
-        'src': 'static/img/ds-d-s-purple-letter-logo-design-with-creative-liquid-effect-flowing-vector-illustration-MFR65B.png',
-        'sizes': '160x160'}
+        'src': '/static/assets/img/hero/unnamed.png',
+        'sizes': '160x160'
+    }
 ]
-PWA_APP_SPLASH_SCREEN = [{'src': '/static/images/571658cd2ec465a08e2dc2cf30258023.png',
-                          'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'}]'''
+PWA_APP_SPLASH_SCREEN = [{'src': '/static/assets/img/hero/unnamed.png',
+                'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'}]
 PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'en-US'
-PWA_APP_DEBUG_MODE = False
+PWA_APP_DEBUG_MODE = True
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True

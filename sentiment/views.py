@@ -1,43 +1,59 @@
-from collections import OrderedDict  # Importing ordered dict for sorting the dictionary data
-from operator import itemgetter  # Importing item getter for getting the value for key in the dictionary data
 from typing import Any, AnyStr  # Using to define the type
-import json
 import requests
 from django.contrib import messages  # Importing messages module for showing errors
 from django.contrib.auth.decorators import login_required  # Importing decorator for verifying the authenticated user
 from django.http import HttpResponseRedirect  # If any error caused it will help to redirect
 from django.shortcuts import render  # Jinja template engine will parse the contents using render
 from django.urls import reverse  # Used in redirecting
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_headers
 from django.views.generic.base import TemplateView  # Importing template class based views
 from .youtube import get_youtube_comment_data, get_clean_data, get_subtitles, get_youtube_data
 from decouple import config
+from .api import analyze_emotion
 
 API = config('API')
 
+
+@method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
+@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
 class HomeView(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/index.html'
 
 
+@method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
+@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
 class FormViewEmotion(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/sentiment_emotion_form.html'
 
 
+@method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
+@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
 class FormViewIntent(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/sentiment_intent_form.html'
 
 
+@method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
+@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
 class FormViewVideoEmotion(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/sentiment_form_emotion_video.html'
 
 
+@method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
+@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
 class FormViewVideoIntent(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/sentiment_intent_form_video.html'
 
 
+@method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
+@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
 class FormCommentViewVideoEmotion(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/sentiment_form_emotion_comment_video.html'
 
 
+@method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
+@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
 class FormCommentViewVideoIntent(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/sentiment_intent_form_video_comment.html'
 
@@ -74,9 +90,10 @@ def show_emotion(request: AnyStr) -> Any:
                        error_)  # adding the errors in messages list which will be shown in message.html template
 
     texts = get_clean_data(texts)  # Getting the cleaned text using get_clean_data method
-    emotion_predictions = requests.post(API+'emotion', json={"text":texts})
-    emotion_labels = emotion_predictions.json()['emotion_labels']  # getting the labels
-    emotion_predictions=emotion_predictions.json()['emotion_predictions']
+
+    emotion_predictions = analyze_emotion(texts)
+    emotion_labels = list(emotion_predictions['emotion_scores'].keys())  # getting the labels
+    emotion_predictions = list(emotion_predictions['emotion_scores'].values())  # getting the probabilities
 
     context = {  # setting the context with our data
         'labels': emotion_labels,
@@ -119,9 +136,9 @@ def show_intent(request: AnyStr) -> Any:
 
     texts = get_clean_data(texts)  # Getting the cleaned text using get_clean_data method
 
-    intent_predictions = requests.post(API+'intent', json={"text":texts})
+    intent_predictions = requests.post(API + 'intent', json={"text": texts})
     labels = intent_predictions.json()['intent_labels']  # getting the labels
-    intent_predictions=intent_predictions.json()['intent_predictions']
+    intent_predictions = intent_predictions.json()['intent_predictions']
 
     context = {  # setting the context with our data
         'labels': labels,
@@ -150,9 +167,9 @@ def show_intent_video(request: AnyStr) -> Any:
 
     texts = get_clean_data(texts)  # Getting the cleaned text using get_clean_data method
 
-    intent_predictions = requests.post(API+'intent', json={"text":texts})
+    intent_predictions = requests.post(API + 'intent', json={"text": texts})
     labels = intent_predictions.json()['intent_labels']  # getting the labels
-    intent_predictions=intent_predictions.json()['intent_predictions']
+    intent_predictions = intent_predictions.json()['intent_predictions']
 
     context = {  # setting the context with our data
         'labels': labels,
@@ -181,9 +198,9 @@ def show_emotion_video(request: AnyStr) -> Any:
 
     texts = get_clean_data(texts)  # Getting the cleaned text using get_clean_data method
 
-    emotion_predictions = requests.post(API+'emotion', json={"text":texts})
-    emotion_labels = emotion_predictions.json()['emotion_labels']  # getting the labels
-    emotion_predictions=emotion_predictions.json()['emotion_predictions']
+    emotion_predictions = analyze_emotion(texts)
+    emotion_labels = list(emotion_predictions['emotion_scores'].keys())  # getting the labels
+    emotion_predictions = list(emotion_predictions['emotion_scores'].values())  # getting the probabilities
 
     context = {  # setting the context with our data
         'labels': emotion_labels,
@@ -206,9 +223,9 @@ def show_comment_intent_video(request: AnyStr) -> Any:
         return HttpResponseRedirect(
             reverse('sentiment:show_intent_video'))  # Redirecting to form page if there are any errors.
 
-    intent_predictions = requests.post(API+'intent', json={"text":texts})
+    intent_predictions = requests.post(API + 'intent', json={"text": texts})
     labels = intent_predictions.json()['intent_labels']  # getting the labels
-    intent_predictions=intent_predictions.json()['intent_predictions']
+    intent_predictions = intent_predictions.json()['intent_predictions']
 
     context = {  # setting the context with our data
         'labels': labels,
@@ -231,10 +248,9 @@ def show_comment_emotion_video(request: AnyStr) -> Any:
         return HttpResponseRedirect(
             reverse('sentiment:show_emotion_video'))  # Redirecting to form page if there are any errors
 
-    emotion_predictions = requests.post(API+'emotion', json={"text":texts})
-    emotion_labels = emotion_predictions.json()['emotion_labels']  # getting the labels
-    emotion_predictions=emotion_predictions.json()['emotion_predictions']
-
+    emotion_predictions = analyze_emotion(texts)
+    emotion_labels = list(emotion_predictions['emotion_scores'].keys())  # getting the labels
+    emotion_predictions = list(emotion_predictions['emotion_scores'].values())  # getting the probabilities
 
     context = {  # setting the context with our data
         'labels': emotion_labels,
