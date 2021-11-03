@@ -97,6 +97,8 @@ DATABASES = {
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -132,10 +134,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_HOST = config('DJANGO_STATIC_HOST')
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder' # Django-Compressor
+]
+
+
+# whitenoise
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -146,32 +161,43 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CACHES = {
+    # 'default': {
+    #     'BACKEND': 'django_bmemcached.memcached.BMemcached',
+    #     'TIMEOUT': None,
+    #     'LOCATION': 'mc3.dev.ec2.memcachier.com:11211',
+    #     'OPTIONS': {
+    #         'username': config('MEMCACHIER_USERNAME'),
+    #         'password': config('MEMCACHIER_PASSWORD'),
+    #     }
+    # },
+    # "cache1": {
+    #     'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+    #     'LOCATION': 'memcached-19803.c13.us-east-1-3.ec2.cloud.redislabs.com:19803',
+    #     'OPTIONS': {
+    #         'binary': True,
+    #         'username': config('MEMCACHEDCLOUD_USERNAME'),
+    #         'password': config('MEMCACHEDCLOUD_PASSWORD'),
+    #     },
+    #     'behaviors': {
+    #         'ketama': True,
+    #     }
+    # }
     'default': {
-        'BACKEND': 'django_bmemcached.memcached.BMemcached',
-        'TIMEOUT': None,
-        'LOCATION': 'mc3.dev.ec2.memcachier.com:11211',
-        'OPTIONS': {
-            'username': config('MEMCACHIER_USERNAME'),
-            'password': config('MEMCACHIER_PASSWORD'),
-        }
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
     },
-    "cache1": {
-        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-        'LOCATION': 'memcached-19803.c13.us-east-1-3.ec2.cloud.redislabs.com:19803',
-        'OPTIONS': {
-            'binary': True,
-            'username': config('MEMCACHEDCLOUD_USERNAME'),
-            'password': config('MEMCACHEDCLOUD_PASSWORD'),
-        },
-        'behaviors': {
-            'ketama': True,
-        }
+    'cache1': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
-
 }
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'  # storing session using serializer
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # This is for storing sessions in cache
 SESSION_CACHE_ALIAS = 'default'
+
+COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
+COMPRESS_ENABLED = True
+# Must enable this to use with Whitenoise
+COMPRESS_OFFLINE = True
 
 PWA_APP_NAME = "Sentiment Analysis of youtubers"
 PWA_APP_DESCRIPTION = "A YouTuber, also known as a YouTube celebrity, YouTube content creator, YouTube Creator or " \
@@ -198,7 +224,7 @@ PWA_APP_ICONS_APPLE = [
     }
 ]
 PWA_APP_SPLASH_SCREEN = [{'src': '/static/assets/img/hero/unnamed.png',
-                'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'}]
+                          'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'}]
 PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'en-US'
 PWA_APP_DEBUG_MODE = True

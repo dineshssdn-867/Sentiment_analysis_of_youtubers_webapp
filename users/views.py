@@ -30,7 +30,7 @@ auth = firebase.auth()  # initializing authentication using firebase
 
 
 @method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
-@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
+@method_decorator(cache_page(int(60 * .167), cache="cache1"), name='dispatch')
 class RegisterView(SuccessMessageMixin, CreateView):
     template_name = 'users/register.html'
     form_class = RegisterForm  # instantiating the form object
@@ -55,14 +55,19 @@ class RegisterView(SuccessMessageMixin, CreateView):
 
 
 @method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
-@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
+@method_decorator(cache_page(int(60 * .167), cache="cache1"), name='dispatch')
 class UserLoginView(LoginView):  # Initializing template for login view
     template_name = 'users/login.html'
 
     def form_valid(self, form):
         username = form['username'].value()  # getting the email from form object
         password = form['password'].value()  # getting the password from form object
-        email = User.objects.filter(username=username).values('email')[0]['email']
+        email = User.objects.filter(username=username).values('email')
+        if email is None:
+            messages.error(self.request,
+                           'Please check your password and e-mail')
+        else:
+            email = email[0]['email']
         try:  # some basic validation of e-mail
             user = auth.sign_in_with_email_and_password(email, password)  # login with e-mail and password
             user_info = auth.get_account_info(user['idToken'])
@@ -79,6 +84,6 @@ class UserLoginView(LoginView):  # Initializing template for login view
 
 
 @method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
-@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
+@method_decorator(cache_page(int(60 * .167), cache="cache1"), name='dispatch')
 class UserLogoutView(LogoutView):  # Initializing template for logout view
     template_name = 'users/login.html'
