@@ -161,33 +161,26 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CACHES = {
-    # 'default': {
-    #     'BACKEND': 'django_bmemcached.memcached.BMemcached',
-    #     'TIMEOUT': None,
-    #     'LOCATION': 'mc3.dev.ec2.memcachier.com:11211',
-    #     'OPTIONS': {
-    #         'username': config('MEMCACHIER_USERNAME'),
-    #         'password': config('MEMCACHIER_PASSWORD'),
-    #     }
-    # },
-    # "cache1": {
-    #     'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-    #     'LOCATION': 'memcached-19803.c13.us-east-1-3.ec2.cloud.redislabs.com:19803',
-    #     'OPTIONS': {
-    #         'binary': True,
-    #         'username': config('MEMCACHEDCLOUD_USERNAME'),
-    #         'password': config('MEMCACHEDCLOUD_PASSWORD'),
-    #     },
-    #     'behaviors': {
-    #         'ketama': True,
-    #     }
-    # }
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
+        'BACKEND': 'django_bmemcached.memcached.BMemcached',
+        'TIMEOUT': None,
+        'LOCATION': 'mc3.dev.ec2.memcachier.com:11211',
+        'OPTIONS': {
+            'username': config('MEMCACHIER_USERNAME'),
+            'password': config('MEMCACHIER_PASSWORD'),
+        }
     },
-    'cache1': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    "cache1": {
+        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+        'LOCATION': 'memcached-19803.c13.us-east-1-3.ec2.cloud.redislabs.com:19803',
+        'OPTIONS': {
+            'binary': True,
+            'username': config('MEMCACHEDCLOUD_USERNAME'),
+            'password': config('MEMCACHEDCLOUD_PASSWORD'),
+        },
+        'behaviors': {
+            'ketama': True,
+        }
     }
 }
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'  # storing session using serializer
@@ -229,8 +222,8 @@ PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'en-US'
 PWA_APP_DEBUG_MODE = True
 
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
-# SECURE_SSL_REDIRECT = True
-# django_heroku.settings(locals())
-# del DATABASES['default']['OPTIONS']['sslmode']
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+django_heroku.settings(locals())
+del DATABASES['default']['OPTIONS']['sslmode']
