@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache %}
+
+{% block content %}
+
+    <main>
+        <!--? slider Area Start -->
+        <div class="slider-area ">
+            <div class="slider-active">
+                <!-- Single Slider -->
+                <div class="single-slider slider-height d-flex align-items-center slide-bg">
+                    <div class="container">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                                <div class="hero__caption">
+                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms">Know your intent on YouTube</h1>
+                                    <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s" data-duration="2000ms">
+                                        <a href="{% url 'sentiment:show_intent' %}" class="btn hero-btn">Know your intent Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-none d-sm-block">
+                                <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
+                                    <img src="{% static 'assets/img/hero/unnamed.jpg' %}" alt="" class=" heartbeat">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Slider -->
+                <div class="single-slider slider-height d-flex align-items-center slide-bg">
+                    <div class="container">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                                <div class="hero__caption">
+                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms">See how are your emotions on YouTube</h1>
+                                    <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s" data-duration="2000ms">
+                                        <a href="{% url 'sentiment:show_emotion' %}" class="btn hero-btn">Know your emotion now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-none d-sm-block">
+                                <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
+                                    <img src="{% static 'assets/img/hero/unnamed.jpg' %}" alt="" class="heartbeat">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="video-area">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-lg-12">
+                        <div class="video-wrap">
+                            <div class="play-btn "><a class="popup-video" href="https://www.youtube.com/watch?v=OR0wfP2FD3c"><i class="fas fa-play"></i></a></div>
+                        </div>
+                        <div class="video-wrap">
+                            <div class="play-btn "><a class="popup-video" href="https://www.youtube.com/watch?v=OR0wfP2FD3c"><i class="fas fa-play"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

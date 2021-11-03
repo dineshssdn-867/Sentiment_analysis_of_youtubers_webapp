@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache %}
+{% block content %}
+{% cache 2500 aboutus %}
+    <main>
+        <!-- Hero Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider slider-height2 d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+                                <h2>About Us</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Hero Area End-->
+        <!-- About Details Start -->
+        <div class="about-details section-padding30">
+            <div class="container">
+                <div class="row">
+                    <div class="offset-xl-1 col-lg-8">
+                        <div class="about-details-cap mb-50">
+                            <h4>Our Mission</h4>
+                            <p>We build new technologies to make life more easier and want to bring the youtubers more close to their subscribers</p>
+                        </div>
+                        <div class="about-details-cap mb-50">
+                            <h4>How is the app build?</h4>
+                            <p>We have worked on Colab to write the code for the Sentiment Analysis of a YouTube Video. We have used a pre-trained BERT Model to do sentiment analysis of a YouTuber who is speaking in the video. . We will be using ktrain which is a Python library that makes deep learning more accessible and easier to apply For that we have fetched subtitles of a video from YouTube transcript -API
+                            </p>
+                            <p> The sentiments are of the YouTuber’s video, what he/she is it trying to say to its viewers, to know that we have classified the sentiments into 7 emotions(Joy, Sadness, Fear, Anger, Neutral, Love Surprise). </p>
+                            <p> Then we pre-process the text, pass it through BERT Model and plot the learning rate of the model. We have also done an ‘intent based classification’ which will tell us what the intention of a youtuber is on the video. This algorithm works similarly to sentiment analysis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About Details End -->
+        <!--? Video Area Start -->
+        <div class="video-area mb-100">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-lg-12">
+                    <div class="video-wrap">
+                        <div class="play-btn "><a class="popup-video" href="https://www.youtube.com/watch?v=OR0wfP2FD3c"><i class="fas fa-play"></i></a></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endcache %}
+{% endblock %}
