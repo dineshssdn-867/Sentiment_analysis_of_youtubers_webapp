@@ -4,6 +4,7 @@
 ### Django ###
 *.log
 *.pot
+*.pyc
 __pycache__/
 local_settings.py
 db.sqlite3
@@ -152,6 +153,10 @@ myenv1
 models
 
 # extra docs
+Sam_chi_channel.png
+sam_chui_emotion_predicition.png
+sam_chui_intent_predicition.png
+Sentiment.pgerd
 storage_article.txt
 
 # End of https://www.toptal.com/developers/gitignore/api/django
