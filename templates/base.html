@@ -57,9 +57,9 @@
                                 <ul id="navigation">
                                     <li><a href="{% url 'sentiment:home' %}"><span>Home<span></a></li>
                                     <li><a href="{% url 'sentiment:show_emotion' %}"><span>Emotion Analysis</span></a></li>
-                                    <li><a href="{% url 'sentiment:show_intent' %}"><span>Intent Analysis</span></a></li>
+                                    <!-- <li><a href="{% url 'sentiment:show_intent' %}"><span>Intent Analysis</span></a></li> -->
                                     <li><a href="{% url 'sentiment:show_emotion_video_comment' %}"><span>Sentiment of video comments</span></a></li>
-                                    <li><a href="{% url 'sentiment:show_intent_video_comment' %}"><span>Intent of video comments</span></a></li>
+                                    <!-- <li><a href="{% url 'sentiment:show_intent_video_comment' %}"><span>Intent of video comments</span></a></li> -->
                                     <li><a href="{% url 'aboutus:about' %}"><span>About Us</span></a></li>
                                     {% if user.is_authenticated %}
                                     <li> <a href="#"><span>Hi {{user.username}}</span></a></li>
@@ -119,11 +119,11 @@
                                 <ul>
                                     <li><a href="{% url 'sentiment:home' %}">Home</a></li>
                                     <li><a href="{% url 'sentiment:show_emotion' %}">Emotion Sentiment</a></li>
-                                    <li><a href="{% url 'sentiment:show_intent' %}">Intent Analysis</a></li>
+                                    <!-- <li><a href="{% url 'sentiment:show_intent' %}">Intent Analysis</a></li> -->
                                     <li><a href="{% url 'sentiment:show_emotion_video' %}">Emotion Analysis of video</a></li>
-                                    <li><a href="{% url 'sentiment:show_intent_video' %}">Intent Analysis of video</a></li>
+                                    <!-- <li><a href="{% url 'sentiment:show_intent_video' %}">Intent Analysis of video</a></li> -->
                                     <li><a href="{% url 'sentiment:show_emotion_video_comment' %}">Sentiment of video comments</span></a></li>
-                                    <li><a href="{% url 'sentiment:show_intent_video_comment' %}">Intent of video comments</a></li>
+                                    <!-- <li><a href="{% url 'sentiment:show_intent_video_comment' %}">Intent of video comments</a></li> -->
                                     <li><a href="{% url 'aboutus:about' %}">About Us</a></li>
                                 </ul>
                             </div>

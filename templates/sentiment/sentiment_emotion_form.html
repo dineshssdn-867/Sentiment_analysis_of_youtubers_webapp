@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load cache %}
 
 {% block content %}
-{% cache 2500 emotion_form-1 %}
     <main>
         <!-- Hero Area Start-->
         <div class="slider-area ">
@@ -19,9 +17,7 @@
                 </div>
             </div>
         </div>
-    {% endcache %}
         {% include 'messages.html' %}
-    {% cache 2500 emotion_form-2 %}
         <!-- Hero Area End-->
         <!--================login_part Area =================-->
         <section class="login_part section_padding ">
@@ -30,9 +26,9 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="login_part_text text-center">
                             <div class="login_part_text_iner">
-                                <h2>Trying to find intent</h2>
-                                <p>Know your intent just by few details in a particular timeline</p>
-                                <a href="{% url 'sentiment:show_intent' %}" class="btn_3">Intent Analysis</a>
+                                <h2>Trying to find emotion of single video</h2>
+                                <p>Know your sentiment/emotion of particular video</p>
+                                <a href="{% url 'sentiment:show_emotion_video' %}" class="btn_3">Video's Emotion Analysis</a>
                             </div>
                         </div>
                     </div>
@@ -42,7 +38,6 @@
                                 <h3>
                                     Know your emotion just by providing few details in a particular timeline</h3>
                                 <form class="row contact_form" method="post"action="{% url 'sentiment:show_emotion_result' %}">
-                                    {% endcache %}
                                     {% csrf_token %}
                                     {% if form.errors %}
                                     <div id="errors">
@@ -58,7 +53,6 @@
                                         </div>
                                     </div>
                                 {% endif %}
-                                {% cache 2500 emotion_form-3 %}
                                     <div class="col-md-12 form-group p_star">
                                         <input type="text" class="form-control" id="channel_id" name="channel_id" value=""
                                             required placeholder="Channel id of your channel">
@@ -82,5 +76,4 @@
             </div>
         </section>
     </main>
-{% endcache %}
 {% endblock %}
