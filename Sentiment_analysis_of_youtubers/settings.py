@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-s+*#qfpq7)afowykv+h#g*&7%&q%wh7*zk2_bw+ir1-nou6&u^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['youtuberssentiment.herokuapp.com']
+ALLOWED_HOSTS = ['youtuberssentiment.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
@@ -46,18 +46,16 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.gzip.GZipMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
+    'compression_middleware.middleware.CompressionMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
+
 ]
 
 ROOT_URLCONF = 'Sentiment_analysis_of_youtubers.urls'
@@ -185,7 +183,24 @@ CACHES = {
             'password': config('MEMCACHEDCLOUD_PASSWORD'),
         },
         'behaviors': {
+            # Enable faster IO
+            'no_block': True,
+            'tcp_nodelay': True,
+
+            # Keep connection alive
+            'tcp_keepalive': True,
+
+            # Timeout settings
+            'connect_timeout': 2000,  # ms
+            'send_timeout': 750 * 1000,  # us
+            'receive_timeout': 750 * 1000,  # us
+            '_poll_timeout': 2000,  # ms
+
+            # Better failover
             'ketama': True,
+            'remove_failed': 1,
+            'retry_timeout': 2,
+            'dead_timeout': 30,
         }
     }
 }
