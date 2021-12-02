@@ -59,7 +59,7 @@ class FormCommentViewVideoIntent(TemplateView):  # Initializing template for tem
     template_name = 'sentiment/sentiment_intent_form_video_comment.html'
 
 
-@login_required(login_url='/users/login')  # Checking if the user is authenticated
+@login_required(login_url='/users/login/')  # Checking if the user is authenticated
 def show_emotion(request: AnyStr) -> Any:
     channel_name = request.POST.get('channel name')  # Getting the channel/video id from the form using post method
     publish_date_after = request.POST.get(
@@ -112,7 +112,7 @@ def show_emotion(request: AnyStr) -> Any:
                   context=context)  # rendering template with out data using jinja template engine
 
 
-@login_required(login_url='/users/login')  # Checking if the user is authenticated
+@login_required(login_url='/users/login/')  # Checking if the user is authenticated
 def show_intent(request: AnyStr) -> Any:
     channel_id = request.POST.get('channel_id')  # Getting the channel/video id from the form using post method
     publish_date_after = request.POST.get(
@@ -157,7 +157,7 @@ def show_intent(request: AnyStr) -> Any:
                   context=context)  # rendering template with out data using jinja template engine
 
 
-@login_required(login_url='/users/login')  # Checking if the user is authenticated
+@login_required(login_url='/users/login/')  # Checking if the user is authenticated
 def show_intent_video(request: AnyStr) -> Any:
     video_ids = request.POST.get('video_id')  # Getting the video id from the form using post method
     if video_ids is None:  # Some basic validations
@@ -188,7 +188,7 @@ def show_intent_video(request: AnyStr) -> Any:
                   context=context)  # rendering template with out data using jinja template engine
 
 
-@login_required(login_url='/users/login')  # Checking if the user is authenticated
+@login_required(login_url='/users/login/')  # Checking if the user is authenticated
 def show_emotion_video(request: AnyStr) -> Any:
     url = request.POST.get('url')  # Getting the video id from the form using post method
     if url is None:  # Some basic validations
@@ -227,7 +227,7 @@ def show_emotion_video(request: AnyStr) -> Any:
                   context=context)  # rendering template with out data using jinja template engine
 
 
-@login_required(login_url='/users/login')  # Checking if the user is authenticated
+@login_required(login_url='/users/login/')  # Checking if the user is authenticated
 def show_comment_intent_video(request: AnyStr) -> Any:
     video_id = request.POST.get('video_id')  # Getting the video id from the form using post method
     if video_id is None:  # Some basic validations
@@ -252,7 +252,7 @@ def show_comment_intent_video(request: AnyStr) -> Any:
                   context=context)  # rendering template with out data using jinja template engine
 
 
-@login_required(login_url='/users/login')  # Checking if the user is authenticated
+@login_required(login_url='/users/login/')  # Checking if the user is authenticated
 def show_comment_emotion_video(request: AnyStr) -> Any:
     url = request.POST.get('url')  # Getting the video id from the form using post method
     if url is None:  # Some basic validations
