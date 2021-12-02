@@ -1,4 +1,5 @@
 from urllib import parse
+import re
 
 
 def get_video_id(url):
@@ -7,5 +8,9 @@ def get_video_id(url):
     try:
         v = qsl['v'][0]
     except:
-        v = ''
+        match = re.search(r"(?:v=|\/)([0-9A-Za-z_-]{11}).*", url)
+        if match:
+            v = match.group(1)
+        else:
+            v = ""
     return v

@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="44b3fdd4-81e2-4b9b-b8d7-0929c8d44e93" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sentiment/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sentiment/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sentiment/retrieve_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentiment/retrieve_data.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +38,7 @@
       <workItem from="1637126598252" duration="3265000" />
       <workItem from="1637929914020" duration="914000" />
       <workItem from="1638035747845" duration="3000" />
-      <workItem from="1638433648593" duration="10675000" />
+      <workItem from="1638433648593" duration="11693000" />
     </task>
     <servers />
   </component>
