@@ -3,7 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="44b3fdd4-81e2-4b9b-b8d7-0929c8d44e93" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sentiment/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sentiment/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentiment_analysis_of_youtubers/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sentiment_analysis_of_youtubers/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sentiment/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentiment/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sentiment/youtube.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentiment/youtube.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/sentiment/results_emotion.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sentiment/results_emotion.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/sentiment/sentiment_emotion_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sentiment/sentiment_emotion_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/sentiment/sentiment_form_emotion_comment_video.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sentiment/sentiment_form_emotion_comment_video.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/sentiment/sentiment_form_emotion_video.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sentiment/sentiment_form_emotion_video.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +43,9 @@
       <workItem from="1636027596201" duration="6000" />
       <workItem from="1637084549584" duration="370000" />
       <workItem from="1637126598252" duration="3265000" />
-      <workItem from="1637929914020" duration="17000" />
+      <workItem from="1637929914020" duration="914000" />
+      <workItem from="1638035747845" duration="3000" />
+      <workItem from="1638433648593" duration="9616000" />
     </task>
     <servers />
   </component>

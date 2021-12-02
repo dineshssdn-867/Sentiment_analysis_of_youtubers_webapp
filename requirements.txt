@@ -1,4 +1,5 @@
 asgiref==3.4.1
+beautifulsoup4==4.10.0
 Brotli==1.0.9
 certifi==2021.5.30
 cffi==1.14.6
@@ -6,6 +7,7 @@ chardet==3.0.4
 charset-normalizer==2.0.6
 click==8.0.1
 cryptography==3.4.8
+deep-translator==1.5.5
 Deprecated==1.2.13
 dj-database-url==0.5.0
 Django==3.2.7
@@ -55,6 +57,7 @@ rjsmin==1.1.0
 rsa==4.7.2
 six==1.16.0
 sniffio==1.2.0
+soupsieve==2.3.1
 sqlparse==0.4.2
 tqdm==4.62.2
 translate==3.6.1
