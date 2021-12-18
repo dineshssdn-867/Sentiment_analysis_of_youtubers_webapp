@@ -101,8 +101,8 @@ def show_emotion(request: AnyStr) -> Any:
     texts = get_clean_data(texts)  # Getting the cleaned text using get_clean_data method
 
     emotion_predictions = analyze_emotion(texts)
-    emotion_labels = list(emotion_predictions['emotion_scores'].keys())  # getting the labels
-    emotion_predictions = list(emotion_predictions['emotion_scores'].values())  # getting the probabilities
+    emotion_labels = emotion_predictions['emotion_labels']  # getting the labels
+    emotion_predictions = emotion_predictions['emotion_predictions']  # getting the probabilities
 
     context = {  # setting the context with our data
         'labels': emotion_labels,
@@ -216,8 +216,8 @@ def show_emotion_video(request: AnyStr) -> Any:
     texts = get_clean_data(texts)  # Getting the cleaned text using get_clean_data method
 
     emotion_predictions = analyze_emotion(texts)
-    emotion_labels = list(emotion_predictions['emotion_scores'].keys())  # getting the labels
-    emotion_predictions = list(emotion_predictions['emotion_scores'].values())  # getting the probabilities
+    emotion_labels = emotion_predictions['emotion_labels']  # getting the labels
+    emotion_predictions = emotion_predictions['emotion_predictions']  # getting the probabilities
 
     context = {  # setting the context with our data
         'labels': emotion_labels,
@@ -274,8 +274,8 @@ def show_comment_emotion_video(request: AnyStr) -> Any:
             reverse('sentiment:show_emotion_video_comment'))  # Redirecting to form page if there are any errors
 
     emotion_predictions = analyze_emotion(texts)
-    emotion_labels = list(emotion_predictions['emotion_scores'].keys())  # getting the labels
-    emotion_predictions = list(emotion_predictions['emotion_scores'].values())  # getting the probabilities
+    emotion_labels = emotion_predictions['emotion_labels']  # getting the labels
+    emotion_predictions = emotion_predictions['emotion_predictions']  # getting the probabilities
 
     context = {  # setting the context with our data
         'labels': emotion_labels,

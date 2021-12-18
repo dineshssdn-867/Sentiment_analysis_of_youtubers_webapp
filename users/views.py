@@ -41,7 +41,6 @@ class RegisterView(SuccessMessageMixin, CreateView):
         username = form['username'].value()  # getting the email from form object
         email = form['email'].value()
         password = form['password1'].value()  # getting the password from form object
-        print(email)
         try:  # some basic validation of e-mail
             user = auth.create_user_with_email_and_password(email,
                                                             password)  # create the object using e-mail and password
@@ -63,7 +62,6 @@ class UserLoginView(LoginView):  # Initializing template for login view
         username = form['username'].value()  # getting the email from form object
         password = form['password'].value()  # getting the password from form object
         email = User.objects.filter(username=username).values('email')
-        print(email)
         if email is None:
             messages.error(self.request,
                            'Please check your password and e-mail')
