@@ -5,6 +5,7 @@ from youtube_transcript_api import \
 from typing import Any, AnyStr  # mentioning the types of data
 from .preprocess import get_clean_data
 from deep_translator import GoogleTranslator
+from langdetect import detect
 
 
 def get_youtube_data(channel_id: AnyStr, publish_date_after: AnyStr, publish_date_before: AnyStr) -> list:
@@ -62,13 +63,16 @@ def get_youtube_comment_data(video_id: AnyStr) -> AnyStr:
         num = len(values['items'])  # getting the length of items
         for i in range(0, num):
             try:
-                text = text + values['items'][i]['snippet']["topLevelComment"]['snippet'][
+                text_ = values['items'][i]['snippet']["topLevelComment"]['snippet'][
                     'textOriginal'] + ' '  # appending the text to list
+                text_ = get_clean_data(text_)
+                language_check = detect(text_)
+                if language_check != 'en':
+                    text_ = GoogleTranslator(source=language_check, target='en').translate(text=text_)
+                text = text + text_
             except:
                 text = text + ' '  # some basic validations
                 continue
-        text = get_clean_data(text)
-        text = GoogleTranslator(source='auto', target='en').translate(text=text)
         return text  # returning the video ids
     else:
         return text  # empty list if any error occurs

@@ -1,7 +1,9 @@
 import re  # Importing re module for cleaning data
 import nltk  # Importing nltk module for cleaning data and removing stopwords
 from typing import AnyStr
+from nltk import WordNetLemmatizer
 
+wnl = WordNetLemmatizer()
 
 def get_clean_data(texts: AnyStr) -> AnyStr:
     emoji_pattern = re.compile("["
@@ -10,9 +12,15 @@ def get_clean_data(texts: AnyStr) -> AnyStr:
                                u"\U0001F680-\U0001F6FF"  # transport & map symbols
                                u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
                                "]+", flags=re.UNICODE)
-    texts=emoji_pattern.sub(r'', texts)
+    texts = emoji_pattern.sub(r'', texts)
     texts = texts.lower()  # this function converts text to lower case
-    texts = texts.replace(r"(http|@)\S+", "")  # Removing unnecessary stuff
+    texts = texts.replace(r'https?:\/\/\S+', "")  # Removing unnecessary stuff
+    texts = texts.replace(r'www\.[a - z]?\.?(com) + | [a - z] +\.(com)', "")  # Removing unnecessary stuff
+    texts = texts.replace(r'{link}', "")  # Removing unnecessary stuff
+    texts = texts.replace(r'\[video\]', "")  # Removing unnecessary stuff
+    texts = texts.replace(r'&[a-z]+;', "")  # Removing unnecessary stuff
+    texts = texts.replace(r'\S*@\S*\s?', "")  # Removing unnecessary stuff
+    texts = texts.replace(r"[^a-z\s\(\-:\)\\\/\];='#]", ": :")  # Removing unnecessary stuff
     texts = texts.replace(r"::", ": :")  # Removing unnecessary stuff
     texts = texts.replace(r"’", "'")  # Removing unnecessary stuff
     texts = texts.replace(r"[^a-z\':_]", " ")  # Removing unnecessary stuff
@@ -25,5 +33,5 @@ def get_clean_data(texts: AnyStr) -> AnyStr:
     stopwords.remove('not')  # removing some negations important which are for predictions
     stopwords.remove('nor')  # removing some negations important which are for predictions
     stopwords.remove('no')  # removing some negations important which are for predictions
-    texts = ' '.join([word for word in texts.split() if word not in stopwords])  # removing stopwords from main texts
+    texts = ' '.join([wnl.lemmatize(word) for word in texts.split() if word not in stopwords])  # removing stopwords from main texts
     return texts  # returning the clean text
