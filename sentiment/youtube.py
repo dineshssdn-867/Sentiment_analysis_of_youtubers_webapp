@@ -73,7 +73,6 @@ def get_youtube_comment_data(video_id: AnyStr) -> AnyStr:
             except:
                 text = text + ' '  # some basic validations
                 continue
-        print(text)
         return text  # returning the video ids
     else:
         return text  # empty list if any error occurs
