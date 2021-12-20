@@ -31,6 +31,7 @@ hyperframe==5.2.0
 idna==2.10
 joblib==1.0.1
 jwcrypto==1.0
+langdetect==1.0.9
 libretranslatepy==2.1.1
 lxml==4.6.3
 nltk==3.6.2
