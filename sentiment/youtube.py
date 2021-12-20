@@ -6,6 +6,7 @@ from typing import Any, AnyStr  # mentioning the types of data
 from .preprocess import get_clean_data
 from deep_translator import GoogleTranslator
 from langdetect import detect
+from translate import translator
 
 
 def get_youtube_data(channel_id: AnyStr, publish_date_after: AnyStr, publish_date_before: AnyStr) -> list:
@@ -56,7 +57,7 @@ def get_subtitles(video_ids):
 
 def get_youtube_comment_data(video_id: AnyStr) -> AnyStr:
     x = requests.get(
-        'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=' + video_id + '&key=AIzaSyDnIqoMPASXgKPkzxlcy4krIPOHtJOJ998&maxResults=50')  # getting the data of channel/video
+        'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=' + video_id + '&key=AIzaSyDnIqoMPASXgKPkzxlcy4krIPOHtJOJ998&maxResults=30')  # getting the data of channel/video
     text = ''
     if 200 <= x.status_code <= 399:  # some basic validations
         values = json.loads(x.text)  # we will parse the text to json and json to dictionary
@@ -68,11 +69,12 @@ def get_youtube_comment_data(video_id: AnyStr) -> AnyStr:
                 text_ = get_clean_data(text_)
                 language_check = detect(text_)
                 if language_check != 'en':
-                    text_ = GoogleTranslator(source=language_check, target='en').translate(text=text_)
+                    text_ = translator(language_check, 'en', text_)
                 text = text + text_
             except:
                 text = text + ' '  # some basic validations
                 continue
+        print(text)
         return text  # returning the video ids
     else:
         return text  # empty list if any error occurs
