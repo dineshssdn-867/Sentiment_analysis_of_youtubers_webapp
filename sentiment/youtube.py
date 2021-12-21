@@ -57,7 +57,7 @@ def get_subtitles(video_ids):
 
 def get_youtube_comment_data(video_id: AnyStr) -> AnyStr:
     x = requests.get(
-        'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=' + video_id + '&key=AIzaSyDnIqoMPASXgKPkzxlcy4krIPOHtJOJ998&maxResults=30')  # getting the data of channel/video
+        'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=' + video_id + '&key=AIzaSyDnIqoMPASXgKPkzxlcy4krIPOHtJOJ998&maxResults=15')  # getting the data of channel/video
     text = ''
     if 200 <= x.status_code <= 399:  # some basic validations
         values = json.loads(x.text)  # we will parse the text to json and json to dictionary
