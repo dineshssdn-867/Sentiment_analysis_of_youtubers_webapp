@@ -273,6 +273,12 @@ def show_comment_emotion_video(request: AnyStr) -> Any:
         return HttpResponseRedirect(
             reverse('sentiment:show_emotion_video_comment'))  # Redirecting to form page if there are any errors
 
+    if texts == '':  # Some basic validations
+        messages.error(request,
+                       'Please check the comment settins')  # adding the errors in messages list which will be shown in message.html template
+        return HttpResponseRedirect(
+            reverse('sentiment:show_emotion_video_comment'))  # Redirecting to form page if there are any errors.
+
     emotion_predictions = analyze_emotion(texts)
     emotion_labels = emotion_predictions['emotion_labels']  # getting the labels
     emotion_predictions = emotion_predictions['emotion_predictions']  # getting the probabilities
