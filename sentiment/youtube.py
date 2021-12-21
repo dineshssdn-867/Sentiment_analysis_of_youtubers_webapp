@@ -7,6 +7,9 @@ from .preprocess import get_clean_data
 from deep_translator import GoogleTranslator
 from langdetect import detect
 from translate import translator
+import asyncio
+
+loop = asyncio.get_event_loop()
 
 
 def get_youtube_data(channel_id: AnyStr, publish_date_after: AnyStr, publish_date_before: AnyStr) -> list:
@@ -65,14 +68,13 @@ def get_youtube_comment_data(video_id: AnyStr) -> AnyStr:
         for i in range(0, num):
             try:
                 text_ = values['items'][i]['snippet']["topLevelComment"]['snippet'][
-                    'textOriginal'] + ' '  # appending the text to list
+                            'textOriginal'] + ' '  # appending the text to list
                 text_ = get_clean_data(text_)
-                print(text_)
                 language_check = detect(text_)
                 print(language_check)
                 if language_check != 'en':
                     try:
-                        text_ = translator(language_check, 'en', text_)
+                        text_ = loop.run_in_executor(None, translator, [language_check, 'en', text_])
                     except:
                         text_ = ''
                 text = text + text_

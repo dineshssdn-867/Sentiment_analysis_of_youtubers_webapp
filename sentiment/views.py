@@ -48,7 +48,7 @@ class FormViewVideoIntent(TemplateView):  # Initializing template for template v
 
 
 @method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
-@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
+# @method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
 class FormCommentViewVideoEmotion(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/sentiment_form_emotion_comment_video.html'
 
@@ -273,12 +273,11 @@ def show_comment_emotion_video(request: AnyStr) -> Any:
         return HttpResponseRedirect(
             reverse('sentiment:show_emotion_video_comment'))  # Redirecting to form page if there are any errors
 
-    if texts == '' or texts == ' ':  # Some basic validations
+    if not (texts and not texts.isspace()):  # Some basic validations
         messages.error(request,
-                       'Please check the comment settings')  # adding the errors in messages list which will be shown in message.html template
+                       'Please check the comment settings or try after some time')  # adding the errors in messages list which will be shown in message.html template
         return HttpResponseRedirect(
             reverse('sentiment:show_emotion_video_comment'))  # Redirecting to form page if there are any errors.
-
     emotion_predictions = analyze_emotion(texts)
     emotion_labels = emotion_predictions['emotion_labels']  # getting the labels
     emotion_predictions = emotion_predictions['emotion_predictions']  # getting the probabilities

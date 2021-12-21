@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="44b3fdd4-81e2-4b9b-b8d7-0929c8d44e93" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sentiment_analysis_of_youtubers/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sentiment_analysis_of_youtubers/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sentiment/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentiment/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sentiment/youtube.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentiment/youtube.py" afterDir="false" />
     </list>
@@ -14,6 +13,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="20SANu7wFRYpnNfeD2QbiHTQWbX" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -52,7 +59,9 @@
       <workItem from="1639915226471" duration="4000" />
       <workItem from="1639915240693" duration="2000" />
       <workItem from="1639972089719" duration="11866000" />
-      <workItem from="1640081228584" duration="3866000" />
+      <workItem from="1640081228584" duration="9928000" />
+      <workItem from="1640097147907" duration="106000" />
+      <workItem from="1640097569839" duration="4634000" />
     </task>
     <servers />
   </component>
