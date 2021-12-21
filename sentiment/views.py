@@ -273,9 +273,9 @@ def show_comment_emotion_video(request: AnyStr) -> Any:
         return HttpResponseRedirect(
             reverse('sentiment:show_emotion_video_comment'))  # Redirecting to form page if there are any errors
 
-    if texts == '':  # Some basic validations
+    if texts == '' or texts == ' ':  # Some basic validations
         messages.error(request,
-                       'Please check the comment settins')  # adding the errors in messages list which will be shown in message.html template
+                       'Please check the comment settings')  # adding the errors in messages list which will be shown in message.html template
         return HttpResponseRedirect(
             reverse('sentiment:show_emotion_video_comment'))  # Redirecting to form page if there are any errors.
 

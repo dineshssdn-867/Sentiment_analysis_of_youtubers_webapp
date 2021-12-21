@@ -67,7 +67,9 @@ def get_youtube_comment_data(video_id: AnyStr) -> AnyStr:
                 text_ = values['items'][i]['snippet']["topLevelComment"]['snippet'][
                     'textOriginal'] + ' '  # appending the text to list
                 text_ = get_clean_data(text_)
+                print(text_)
                 language_check = detect(text_)
+                print(language_check)
                 if language_check != 'en':
                     try:
                         text_ = translator(language_check, 'en', text_)
@@ -77,7 +79,6 @@ def get_youtube_comment_data(video_id: AnyStr) -> AnyStr:
             except:
                 text = text + ' '  # some basic validations
                 continue
-        print(text)
         return text  # returning the video ids
     else:
         return text  # empty list if any error occurs
