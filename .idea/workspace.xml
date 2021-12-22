@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="44b3fdd4-81e2-4b9b-b8d7-0929c8d44e93" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Sentiment-1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Sentiment-1.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sentiment_analysis_of_youtubers/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sentiment_analysis_of_youtubers/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sentiment/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentiment/preprocess.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sentiment/youtube.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentiment/youtube.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +62,8 @@
       <workItem from="1640097147907" duration="106000" />
       <workItem from="1640097569839" duration="6098000" />
       <workItem from="1640112144232" duration="1257000" />
-      <workItem from="1640141324992" duration="2912000" />
+      <workItem from="1640141324992" duration="3917000" />
+      <workItem from="1640164334046" duration="126000" />
     </task>
     <servers />
   </component>

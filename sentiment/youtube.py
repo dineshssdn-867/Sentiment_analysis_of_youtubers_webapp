@@ -44,7 +44,11 @@ def get_subtitles(video_ids):
         except:
             no_subtitles = no_subtitles + " ," + video_id  # adding the ids in which subtitles settings are not proper
             continue
-        contents = transcript_list.find_transcript(['en']).fetch()
+        try:
+            contents = transcript_list.find_transcript(['en']).fetch()
+        except:
+            for transcript in transcript_list:
+                contents = transcript.translate('en').fetch()  # translate the transcript into english
         for content in contents:
             texts = texts + content['text']  # adding the subtitles text to texts variable
             texts = texts + " "

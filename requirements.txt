@@ -67,5 +67,5 @@ uhashring==2.1
 urllib3==1.26.6
 whitenoise==5.3.0
 wrapt==1.12.1
-youtube-transcript-api==0.4.1
+youtube-transcript-api==0.4.3
 zstandard==0.16.0
