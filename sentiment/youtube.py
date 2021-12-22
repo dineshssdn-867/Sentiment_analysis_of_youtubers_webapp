@@ -1,7 +1,6 @@
 import json  # parsing the web data in python dicitionary
 import requests  # Importing requests module for requesting the data from api
-from youtube_transcript_api import \
-    YouTubeTranscriptApi  # This library will help to fetch to subtitles of youtubers using the video ids
+from youtube_transcript_api import YouTubeTranscriptApi  # This library will help to fetch to subtitles of youtubers using the video ids
 from typing import Any, AnyStr  # mentioning the types of data
 from .preprocess import get_clean_data
 from deep_translator import GoogleTranslator
@@ -9,7 +8,7 @@ from langdetect import detect
 from translate import translator
 import asyncio
 
-loop = asyncio.get_event_loop()
+loop_1 = asyncio.get_event_loop()
 
 
 def get_youtube_data(channel_id: AnyStr, publish_date_after: AnyStr, publish_date_before: AnyStr) -> list:
@@ -39,20 +38,16 @@ def get_subtitles(video_ids):
     texts = ''  # adding the subtitles
     no_subtitles = ''  # adding the ids in which subtitles settings are not proper
     error = ''  # A error text
-
     for video_id in video_ids:
         try:  # basic validations
             transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)  # fetching the transcript list
         except:
-            no_subtitles = no_subtitles + " " + video_id  # adding the ids in which subtitles settings are not proper
+            no_subtitles = no_subtitles + " ," + video_id  # adding the ids in which subtitles settings are not proper
             continue
-
-        for transcript in transcript_list:
-            contents = transcript.translate('en').fetch()  # translate the transcript into english
-            for content in contents:
-                texts = texts + content['text']  # adding the subtitles text to texts variable
-                texts = texts + " "
-
+        contents = transcript_list.find_transcript(['en']).fetch()
+        for content in contents:
+            texts = texts + content['text']  # adding the subtitles text to texts variable
+            texts = texts + " "
     if len(no_subtitles) > 0:  # basic validations for subtitles settings
         error = 'Please check the subtitles setting of this particular video ids as they are skipped' + no_subtitles
     return texts, error  # returning the text and error
@@ -74,7 +69,7 @@ def get_youtube_comment_data(video_id: AnyStr) -> AnyStr:
                 print(language_check)
                 if language_check != 'en':
                     try:
-                        text_ = loop.run_in_executor(None, translator, [language_check, 'en', text_])
+                        text_ = loop_1.run_in_executor(None, translator, [language_check, 'en', text_])
                     except:
                         text_ = ''
                 text = text + text_

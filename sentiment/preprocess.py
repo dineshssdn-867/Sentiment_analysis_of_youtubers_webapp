@@ -18,6 +18,8 @@ def get_clean_data(texts: AnyStr) -> AnyStr:
     texts = texts.replace(r'www\.[a - z]?\.?(com) + | [a - z] +\.(com)', "")  # Removing unnecessary stuff
     texts = texts.replace(r'{link}', "")  # Removing unnecessary stuff
     texts = texts.replace(r'\[video\]', "")  # Removing unnecessary stuff
+    texts = texts.replace(r'\[Applause\]', "")  # Removing unnecessary stuff
+    texts = texts.replace(r'\[Music\]', "")  # Removing unnecessary stuff
     texts = texts.replace(r'&[a-z]+;', "")  # Removing unnecessary stuff
     texts = texts.replace(r'\S*@\S*\s?', "")  # Removing unnecessary stuff
     texts = texts.replace(r"[^a-z\s\(\-:\)\\\/\];='#]", ": :")  # Removing unnecessary stuff
