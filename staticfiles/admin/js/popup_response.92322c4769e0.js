@@ -1,1 +1,0 @@
-"use strict";{const e=JSON.parse(document.getElementById("django-admin-popup-response-constants").dataset.popupResponse);switch(e.action){case"change":opener.dismissChangeRelatedObjectPopup(window,e.value,e.obj,e.new_value);break;case"delete":opener.dismissDeleteRelatedObjectPopup(window,e.value);break;default:opener.dismissAddRelatedObjectPopup(window,e.value,e.obj)}}

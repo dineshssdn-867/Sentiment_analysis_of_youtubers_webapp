@@ -19,13 +19,13 @@
             </div>
         </div>
         {% include 'messages.html' %}
-        <h2 align="center">Emotion Analysis</h2>
+        <h2 align="center" class="mt-4">Emotion Analysis</h2>
         <div class="container">
-        <canvas id="myChart" width="500" height="400"></canvas>
+        <canvas id="myChart" class="mt-3" style="width: 100%;"></canvas>
         </div>
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.js"></script>
-            <div class="col-md-6 my-4">
+            <div class="col-md-6">
         <div class="bg-white">
             <div class="card-body">
                 <script>
@@ -35,18 +35,8 @@
                         data: {
                             labels: [{% for label in labels %} '{{label}}',{% endfor %}],
                     datasets: [{
-                        label: 'Emotion',
+                        label: '',
                         data: [{% for prob in probabilities %} {{ prob }}, {% endfor %}],
-                          options: {
-                            plugins: {
-                              legend: {
-                                title: {
-                                  display: false,
-                                  text: 'Legend Title',
-                                }
-                              }
-                            }
-                          },
                         backgroundColor: [
                             'rgba(255, 99, 132, 1)',
                             'rgba(54, 162, 235, 1)',

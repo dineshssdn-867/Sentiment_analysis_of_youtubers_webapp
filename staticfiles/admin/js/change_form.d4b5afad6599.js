@@ -1,1 +1,0 @@
-"use strict";{const e=["BUTTON","INPUT","SELECT","TEXTAREA"],t=document.getElementById("django-admin-form-add-constants").dataset.modelName;if(t){const n=document.getElementById(t+"_form");for(const t of n.elements)if(e.includes(t.tagName)&&!t.disabled&&t.offsetParent){t.focus();break}}}
