@@ -1,7 +1,6 @@
 {% load static %}
 {% load pwa %}
 
-
 <!doctype html>
 <html class="no-js' %}" lang="zxx">
 <head>
@@ -35,7 +34,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="{% static 'assets/img/hero/unnamed.jpg' %}"  alt="">
+                    <img src="{% static '/assets/img/hero/unnamed.jpg' %}"  alt="">
                 </div>
             </div>
         </div>
@@ -52,10 +51,10 @@
                             <a href="{% url 'sentiment:home' %}"><img src="{% static '/assets/img/hero/YouTuber_Sentiment.png' %}"  width="235" height="69" alt="logo"></a>
                         </div>
                         <!-- Main-menu -->
-                        <div class="main-menu d-none d-md-block">
+                        <div class="main-menu">
                             <nav>
                                 <ul id="navigation">
-                                    <li><a href="{% url 'sentiment:home' %}"><span>Home<span></a></li>
+                                    <li><a href="{% url 'sentiment:home' %}"><span>Home</span></a></li>
                                     <li><a href="{% url 'sentiment:show_emotion' %}"><span>Emotion Analysis</span></a></li>
                                     <!-- <li><a href="{% url 'sentiment:show_intent' %}"><span>Intent Analysis</span></a></li> -->
                                     <li><a href="{% url 'sentiment:show_emotion_video_comment' %}"><span>Sentiment of video comments</span></a></li>
