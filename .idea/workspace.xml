@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="44b3fdd4-81e2-4b9b-b8d7-0929c8d44e93" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sam_chi_channel.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sentiment.pgerd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sentiment_analysis_of_youtubers/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sentiment_analysis_of_youtubers/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sam_chui_emotion_predicition.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sam_chui_intent_predicition.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp_demo.mp4" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +66,7 @@
       <workItem from="1640164334046" duration="376000" />
       <workItem from="1640185193490" duration="604000" />
       <workItem from="1640529589856" duration="13000" />
-      <workItem from="1640589721992" duration="3260000" />
+      <workItem from="1640589721992" duration="5981000" />
     </task>
     <servers />
   </component>
