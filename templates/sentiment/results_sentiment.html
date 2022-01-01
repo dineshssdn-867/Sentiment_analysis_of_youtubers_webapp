@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<main>
+        <!-- Hero Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider slider-height2 d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+                                <h2>Results</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'messages.html' %}
+        <h2 align="center" class="mt-4">Sentiment Analysis</h2>
+        <div class="container">
+            <br>
+            <h4>The amount of personal opinion and factual information contained in the text is {{subjectivity}}</h4>
+            <canvas id="myChart" class="mt-3" style="width: 100%;"></canvas>
+        </div>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.js"></script>
+            <div class="col-md-6">
+        <div class="bg-white">
+            <div class="card-body">
+                <script>
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: [{% for label in labels %} '{{label}}',{% endfor %}],
+                    datasets: [{
+                        label: '',
+                        data: [{% for prob in probabilities %} {{ prob }}, {% endfor %}],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                                borderWidth: 1
+                    }]
+                        },
+                    options: {
+                        plugins: {
+                            legend: {
+                                title: {
+                                    display: false,
+                                    text: 'Emotion Analysis',
+                                }
+                            }
+                        },
+                        scales: {
+                            yAxes: [{
+                               scaleLabel: {
+                                    display: true,
+                                    labelString: 'probability'
+                                 },
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }],
+                            xAxes: [{
+                               scaleLabel: {
+                                    display: true,
+                                    labelString: 'Emotion'
+                                 }
+                            }],
+                        }
+                    }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+ </main>
+{% endblock %}

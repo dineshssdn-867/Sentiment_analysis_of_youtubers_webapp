@@ -13,9 +13,47 @@
                         <div class="row justify-content-between align-items-center">
                             <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
                                 <div class="hero__caption">
+                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="1000ms">Emotions of comments</h1>
+                                    <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s" data-duration="2000ms">
+                                        <a href="{% url 'sentiment:show_emotion_video_comment' %}" class="btn hero-btn">Emotion Analysis</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-none d-sm-block">
+                                <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
+                                    <img src="{% static 'assets/img/hero/unnamed.png' %}" alt="" class=" heartbeat">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-slider slider-height d-flex align-items-center slide-bg">
+                    <div class="container">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                                <div class="hero__caption">
                                     <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="1000ms">Sentiments of comments</h1>
                                     <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s" data-duration="2000ms">
-                                        <a href="{% url 'sentiment:show_emotion_video_comment' %}" class="btn hero-btn">Analysis of comments</a>
+                                        <a href="{% url 'sentiment:show_sentiment_video_comment' %}" class="btn hero-btn">Sentiment Analysis</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-none d-sm-block">
+                                <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
+                                    <img src="{% static 'assets/img/hero/unnamed.png' %}" alt="" class=" heartbeat">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-slider slider-height d-flex align-items-center slide-bg">
+                    <div class="container">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                                <div class="hero__caption">
+                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="1000ms">Emotions of YouTube channel</h1>
+                                    <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s" data-duration="2000ms">
+                                        <a href="{% url 'sentiment:show_emotion' %}" class="btn hero-btn">Emotion Analysis</a>
                                     </div>
                                 </div>
                             </div>
@@ -33,9 +71,9 @@
                         <div class="row justify-content-between align-items-center">
                             <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
                                 <div class="hero__caption">
-                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms">See how are your emotions on YouTube</h1>
+                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms">Sentiments of YouTube channel</h1>
                                     <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s" data-duration="2000ms">
-                                        <a href="{% url 'sentiment:show_emotion' %}" class="btn hero-btn">Know your emotion now</a>
+                                        <a href="{% url 'sentiment:show_sentiment' %}" class="btn hero-btn">Sentiment Analysis</a>
                                     </div>
                                 </div>
                             </div>

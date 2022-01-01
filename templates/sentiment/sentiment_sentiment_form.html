@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <main>
+        <!-- Hero Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider slider-height2 d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+                                <h2>Know Sentiment</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'messages.html' %}
+        <!-- Hero Area End-->
+        <!--================login_part Area =================-->
+        <section class="login_part section_padding ">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="login_part_text text-center">
+                            <div class="login_part_text_iner">
+                                <h2>Trying to find emotion of single video</h2>
+                                <p>Know your sentiment/emotion of particular video</p>
+                                <a href="{% url 'sentiment:show_emotion_video' %}" class="btn_3">Video's Emotion Analysis</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="login_part_form">
+                            <div class="login_part_form_iner">
+                                <h3>
+                                    Know sentiment of YouTuber just by providing few details in a particular timeline</h3>
+                                <form class="row contact_form" method="post"action="{% url 'sentiment:show_sentiment_result' %}">
+                                    {% csrf_token %}
+                                    {% if form.errors %}
+                                    <div id="errors">
+                                        <div class="inner">
+                                            <p style="color:red">Please correct the errors below</p>
+                                            <ul>
+                                                {% for field in form %}
+                                                {% if field.errors %}
+                                                <li>{{ form.label }} : {{ field.errors|striptags }}</li>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                    <div class="col-md-12 form-group p_star">
+                                        <input type="text" class="form-control" id="channel name" name="channel name" value=""
+                                            required placeholder="please entire the channel name">
+                                    </div>                                  
+                                    <div class="col-md-12 form-group p_star">
+                                        <input placeholder="The date after you published your videos" class="form-control" required name="publish_date_after" type="text" onfocus="(this.type='date')" id="publish_date_after">
+                                    </div>
+                                    <div class="col-md-12 form-group p_star">
+                                        <input placeholder="The date before you published your videos" class="form-control" required name="publish_date_before" type="text" onfocus="(this.type='date')" id="publish_date_before">
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <button type="submit" value="submit" class="btn_3">
+                                            Know Sentiment
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

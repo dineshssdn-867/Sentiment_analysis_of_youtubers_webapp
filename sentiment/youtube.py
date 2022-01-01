@@ -15,11 +15,14 @@ def get_youtube_data(channel_id: AnyStr, publish_date_after: AnyStr, publish_dat
     publish_date_after = publish_date_after + 'T00:00:00Z'  # formatting the publish date after
     publish_date_before = publish_date_before + 'T00:00:00Z'  # formatting the publish date before
     video_ids = []  # A list for appending the video ids
-    x = requests.get(
+    try:
+        x = requests.get(
         'https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=' + channel_id + '&order=viewCount'
                                                                                                   '&publishedAfter=' +
         publish_date_after + '&publishedBefore=' + publish_date_before + '&key=AIzaSyDnIqoMPASXgKPkzxlcy4krIPOHtJOJ998')
     # getting the data of channel/video
+    except:
+        return []
     if 200 <= x.status_code <= 399:  # some basic validations
         values = json.loads(x.text)  # we will parse the text to json and json to dictionary
         num = len(values['items'])  # getting the length of items
@@ -42,7 +45,7 @@ def get_subtitles(video_ids):
         try:  # basic validations
             transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)  # fetching the transcript list
         except:
-            no_subtitles = no_subtitles + " ," + video_id  # adding the ids in which subtitles settings are not proper
+            no_subtitles = no_subtitles + " " + video_id + ", "  # adding the ids in which subtitles settings are not proper
             continue
         try:
             contents = transcript_list.find_transcript(['en']).fetch()
@@ -58,8 +61,11 @@ def get_subtitles(video_ids):
 
 
 def get_youtube_comment_data(video_id: AnyStr) -> AnyStr:
-    x = requests.get(
+    try:
+        x = requests.get(
         'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=' + video_id + '&key=AIzaSyDnIqoMPASXgKPkzxlcy4krIPOHtJOJ998&maxResults=30')  # getting the data of channel/video
+    except:
+        return ''
     text = ''
     if 200 <= x.status_code <= 399:  # some basic validations
         values = json.loads(x.text)  # we will parse the text to json and json to dictionary
@@ -68,14 +74,13 @@ def get_youtube_comment_data(video_id: AnyStr) -> AnyStr:
             try:
                 text_ = values['items'][i]['snippet']["topLevelComment"]['snippet'][
                             'textOriginal'] + ' '  # appending the text to list
-                text_ = get_clean_data(text_)
                 language_check = detect(text_)
-                print(language_check)
                 if language_check != 'en':
                     try:
                         text_ = loop_1.run_in_executor(None, translator, [language_check, 'en', text_])
                     except:
                         text_ = ''
+                text_ = get_clean_data(text_)
                 text = text + text_
             except:
                 text = text + ' '  # some basic validations

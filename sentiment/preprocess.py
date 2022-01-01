@@ -14,6 +14,7 @@ def get_clean_data(texts: AnyStr) -> AnyStr:
                                "]+", flags=re.UNICODE)
     texts = emoji_pattern.sub(r'', texts)
     texts = texts.lower()  # this function converts text to lower case
+    texts = texts.replace(r'[^a-zA-Z]', ' ')
     texts = texts.replace(r'https?:\/\/\S+', "")  # Removing unnecessary stuff
     texts = texts.replace(r'www\.[a - z]?\.?(com) + | [a - z] +\.(com)', "")  # Removing unnecessary stuff
     texts = texts.replace(r'{link}', "")  # Removing unnecessary stuff

@@ -12,51 +12,52 @@ from django.views.generic.base import TemplateView  # Importing template class b
 from .youtube import get_youtube_comment_data, get_clean_data, get_subtitles, get_youtube_data, get_channel_id
 from decouple import config
 from .api import analyze_emotion
+from .sentiments import sentiment_analysis
 from .retrieve_data import get_video_id
 
 API = config('API')
 
 
-@method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
-@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
+# @method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
+# @method_decorator(cache_page(int(60 * .167), cache="cache1"), name='dispatch')
 class HomeView(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/index.html'
 
 
 @method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
-@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
+@method_decorator(cache_page(int(60 * .167), cache="cache1"), name='dispatch')
+class FormViewSentiment(TemplateView):  # Initializing template for template view
+    template_name = 'sentiment/sentiment_sentiment_form.html'
+
+
+@method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
+@method_decorator(cache_page(int(60 * .167), cache="cache1"), name='dispatch')
+class FormViewVideoSentiment(TemplateView):  # Initializing template for template view
+    template_name = 'sentiment/sentiment_form_sentiment_video.html'
+
+
+@method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
+@method_decorator(cache_page(int(60 * .167), cache="cache1"), name='dispatch')
+class FormCommentViewVideoSentiment(TemplateView):  # Initializing template for template view
+    template_name = 'sentiment/sentiment_form_sentiment_comment_video.html'
+
+
+@method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
+@method_decorator(cache_page(int(60 * .167), cache="cache1"), name='dispatch')
 class FormViewEmotion(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/sentiment_emotion_form.html'
 
 
 @method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
-@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
-class FormViewIntent(TemplateView):  # Initializing template for template view
-    template_name = 'sentiment/sentiment_intent_form.html'
-
-
-@method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
-@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
+@method_decorator(cache_page(int(60 * .167), cache="cache1"), name='dispatch')
 class FormViewVideoEmotion(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/sentiment_form_emotion_video.html'
 
 
 @method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
-@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
-class FormViewVideoIntent(TemplateView):  # Initializing template for template view
-    template_name = 'sentiment/sentiment_intent_form_video.html'
-
-
-@method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
-# @method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
+@method_decorator(cache_page(int(60 * .167), cache="cache1"), name='dispatch')
 class FormCommentViewVideoEmotion(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/sentiment_form_emotion_comment_video.html'
-
-
-@method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
-@method_decorator(cache_page(int(60*.167), cache="cache1"), name='dispatch')
-class FormCommentViewVideoIntent(TemplateView):  # Initializing template for template view
-    template_name = 'sentiment/sentiment_intent_form_video_comment.html'
 
 
 @login_required(login_url='/users/login/')  # Checking if the user is authenticated
@@ -108,83 +109,8 @@ def show_emotion(request: AnyStr) -> Any:
         'labels': emotion_labels,
         'probabilities': emotion_predictions,
     }
+
     return render(request, 'sentiment/results_emotion.html',
-                  context=context)  # rendering template with out data using jinja template engine
-
-
-@login_required(login_url='/users/login/')  # Checking if the user is authenticated
-def show_intent(request: AnyStr) -> Any:
-    channel_id = request.POST.get('channel_id')  # Getting the channel/video id from the form using post method
-    publish_date_after = request.POST.get(
-        'publish_date_after')  # Getting the publish_date_after from the form using post method
-    publish_date_before = request.POST.get(
-        'publish_date_before')  # Getting the publish_date_before from the form using post method
-
-    if channel_id is None or publish_date_before is None or publish_date_after is None:
-        return HttpResponseRedirect(reverse('sentiment:show_emotion'))
-
-    video_ids = get_youtube_data(channel_id, publish_date_after,
-                                 publish_date_before)  # Getting the video ids using get_youtube_data method
-    if len(video_ids) == 0:  # Some basic validations
-        messages.error(request,
-                       'Services are not working properly or invalid data')  # adding the errors in messages list
-        # which will be shown in message.html template
-        return HttpResponseRedirect(
-            reverse('sentiment:show_intent'))  # Redirecting to form page if there are any errors.
-
-    texts, error_ = get_subtitles(video_ids)  # Getting the subtitles using get_subtitles method
-    if texts == '':  # Some basic validations
-        messages.error(request,
-                       'Please check the subtitles setting of your channel/video')  # adding the errors in messages
-        # list which will be shown in message.html template
-        return HttpResponseRedirect(
-            reverse('sentiment:show_intent'))  # Redirecting to form page if there are any errors.
-    if len(error_) > 0:  # Some basic validations
-        messages.error(request,
-                       error_)  # adding the errors in messages list which will be shown in message.html template
-
-    texts = get_clean_data(texts)  # Getting the cleaned text using get_clean_data method
-
-    intent_predictions = requests.post(API + 'intent', json={"text": texts})
-    labels = intent_predictions.json()['intent_labels']  # getting the labels
-    intent_predictions = intent_predictions.json()['intent_predictions']
-
-    context = {  # setting the context with our data
-        'labels': labels,
-        'probabilities': intent_predictions,
-    }
-    return render(request, 'sentiment/results_intent.html',
-                  context=context)  # rendering template with out data using jinja template engine
-
-
-@login_required(login_url='/users/login/')  # Checking if the user is authenticated
-def show_intent_video(request: AnyStr) -> Any:
-    video_ids = request.POST.get('video_id')  # Getting the video id from the form using post method
-    if video_ids is None:  # Some basic validations
-        return HttpResponseRedirect(
-            reverse('sentiment:show_intent_video'))
-    video_ids = video_ids.split(' ')  # converting string to list
-    texts, error_ = get_subtitles(video_ids)  # Getting the subtitles using get_subtitles method
-    if texts == '':  # Some basic validations
-        messages.error(request,
-                       'Please check the subtitles setting of your channel/video')  # adding the errors in messages list which will be shown in message.html template
-        return HttpResponseRedirect(
-            reverse('sentiment:show_intent_video'))  # Redirecting to form page if there are any errors.
-    if len(error_) > 0:  # Some basic validations
-        messages.error(request,
-                       error_)  # adding the errors in messages list which will be shown in message.html template
-
-    texts = get_clean_data(texts)  # Getting the cleaned text using get_clean_data method
-
-    intent_predictions = requests.post(API + 'intent', json={"text": texts})
-    labels = intent_predictions.json()['intent_labels']  # getting the labels
-    intent_predictions = intent_predictions.json()['intent_predictions']
-
-    context = {  # setting the context with our data
-        'labels': labels,
-        'probabilities': intent_predictions,
-    }
-    return render(request, 'sentiment/results_intent.html',
                   context=context)  # rendering template with out data using jinja template engine
 
 
@@ -228,31 +154,6 @@ def show_emotion_video(request: AnyStr) -> Any:
 
 
 @login_required(login_url='/users/login/')  # Checking if the user is authenticated
-def show_comment_intent_video(request: AnyStr) -> Any:
-    video_id = request.POST.get('video_id')  # Getting the video id from the form using post method
-    if video_id is None:  # Some basic validations
-        return HttpResponseRedirect(
-            reverse('sentiment:show_intent_video'))
-    texts = get_youtube_comment_data(video_id)  # Getting the subtitles using get_subtitles method
-    if texts == '':  # Some basic validations
-        messages.error(request,
-                       'Please check the subtitles setting of your channel/video')  # adding the errors in messages list which will be shown in message.html template
-        return HttpResponseRedirect(
-            reverse('sentiment:show_intent_video'))  # Redirecting to form page if there are any errors.
-
-    intent_predictions = requests.post(API + 'intent', json={"text": texts})
-    labels = intent_predictions.json()['intent_labels']  # getting the labels
-    intent_predictions = intent_predictions.json()['intent_predictions']
-
-    context = {  # setting the context with our data
-        'labels': labels,
-        'probabilities': intent_predictions,
-    }
-    return render(request, 'sentiment/results_intent.html',
-                  context=context)  # rendering template with out data using jinja template engine
-
-
-@login_required(login_url='/users/login/')  # Checking if the user is authenticated
 def show_comment_emotion_video(request: AnyStr) -> Any:
     url = request.POST.get('url')  # Getting the video id from the form using post method
     if url is None:  # Some basic validations
@@ -287,4 +188,153 @@ def show_comment_emotion_video(request: AnyStr) -> Any:
         'probabilities': emotion_predictions,
     }
     return render(request, 'sentiment/results_emotion.html',
+                  context=context)  # rendering template with out data using jinja template eng
+
+
+@login_required(login_url='/users/login/')  # Checking if the user is authenticated
+def show_sentiment(request: AnyStr) -> Any:
+    channel_name = request.POST.get('channel name')  # Getting the channel/video id from the form using post method
+    publish_date_after = request.POST.get(
+        'publish_date_after')  # Getting the publish_date_after from the form using post method
+    publish_date_before = request.POST.get(
+        'publish_date_before')  # Getting the publish_date_before from the form using post method
+
+    channel_id = get_channel_id(channel_name)
+
+    if channel_id is None:
+        messages.error(request,
+                       'Sorry channel does not exists')  # adding the errors in messages list which will be shown in message.html template
+        return HttpResponseRedirect(
+            reverse('sentiment:show_sentiment'))
+
+    if publish_date_before is None or publish_date_after is None:
+        return HttpResponseRedirect(reverse('sentiment:show_sentiment'))
+
+    video_ids = get_youtube_data(channel_id, publish_date_after,
+                                 publish_date_before)  # Getting the video ids using get_youtube_data method
+
+    if len(video_ids) == 0:  # Some basic validations
+        messages.error(request,
+                       'Services are not working properly or invalid data')  # adding the errors in messages list which will be shown in message.html template
+        return HttpResponseRedirect(
+            reverse('sentiment:show_sentiment'))  # Redirecting to form page if there are any errors.
+
+    texts, error_ = get_subtitles(video_ids)  # Getting the subtitles using get_subtitles method
+    if texts == '':  # Some basic validations
+        messages.error(request,
+                       'Please check the subtitles setting of your channel/video')  # adding the errors in messages list which will be shown in message.html template
+        return HttpResponseRedirect(
+            reverse('sentiment:show_sentiment'))  # Redirecting to form page if there are any errors
+
+    if len(error_) > 0:  # Some basic validations
+        messages.error(request,
+                       error_)  # adding the errors in messages list which will be shown in message.html template
+
+    texts = get_clean_data(texts)  # Getting the cleaned text using get_clean_data method
+
+    emotion_predictions, emotion_labels, subjectivity = sentiment_analysis(texts)
+
+    if emotion_predictions is None or emotion_labels is None or subjectivity['subjectivity'] == '':
+        messages.error(request,
+                       'We are a facing some issue. Please try again later')  # adding the errors in messages list which will be shown in message.html template
+        return HttpResponseRedirect(
+            reverse('sentiment:show_sentiment'))  # Redirecting to form page if there are any errors.
+
+    context = {  # setting the context with our data
+        'labels': emotion_labels,
+        'probabilities': emotion_predictions,
+        'subjectivity': subjectivity['subjectivity']
+    }
+
+    return render(request, 'sentiment/results_sentiment.html',
+                  context=context)  # rendering template with out data using jinja template engine
+
+
+@login_required(login_url='/users/login/')  # Checking if the user is authenticated
+def show_sentiment_video(request: AnyStr) -> Any:
+    url = request.POST.get('url')  # Getting the video id from the form using post method
+    if url is None:  # Some basic validations
+        messages.error(request,
+                       'Please check the url you entered')
+        return HttpResponseRedirect(
+            reverse('sentiment:show_sentiment_video'))
+    video_ids = get_video_id(url)
+    if video_ids is None:  # Some basic validations
+        messages.error(request,
+                       'Please check the url you entered')
+        return HttpResponseRedirect(
+            reverse('sentiment:show_sentiment_video'))
+    video_ids = video_ids.split(' ')  # converting string to list
+    texts, error_ = get_subtitles(video_ids)  # Getting the subtitles using get_subtitles method
+    if texts == '':  # Some basic validations
+        messages.error(request,
+                       'Please check the subtitles setting of your channel/video')  # adding the errors in messages list which will be shown in message.html template
+        return HttpResponseRedirect(
+            reverse('sentiment:show_sentiment_video'))  # Redirecting to form page if there are any errors
+    if len(error_) > 0:  # Some basic validations
+        messages.error(request,
+                       error_)  # adding the errors in messages list which will be shown in message.html template
+
+    texts = get_clean_data(texts)  # Getting the cleaned text using get_clean_data method
+
+    emotion_predictions, emotion_labels, subjectivity = sentiment_analysis(texts)
+
+    if emotion_predictions is None or emotion_labels is None or subjectivity['subjectivity'] == '':
+        messages.error(request,
+                       'We are a facing some issue. Please try again later')  # adding the errors in messages list which will be shown in message.html template
+        return HttpResponseRedirect(
+            reverse('sentiment:show_sentiment_video'))  # Redirecting to form page if there are any errors.
+
+    context = {  # setting the context with our data
+        'labels': emotion_labels,
+        'probabilities': emotion_predictions,
+        'subjectivity': subjectivity['subjectivity']
+    }
+
+    return render(request, 'sentiment/results_sentiment.html',
+                  context=context)  # rendering template with out data using jinja template engine
+
+
+@login_required(login_url='/users/login/')  # Checking if the user is authenticated
+def show_comment_sentiment_video(request: AnyStr) -> Any:
+    url = request.POST.get('url')  # Getting the video id from the form using post method
+    if url is None:  # Some basic validations
+        messages.error(request,
+                       'Please check the url you entered')
+        return HttpResponseRedirect(
+            reverse('sentiment:show_sentiment_video_comment'))
+    video_ids = get_video_id(url)
+    if video_ids is None:  # Some basic validations
+        messages.error(request,
+                       'Please check the url you entered')
+        return HttpResponseRedirect(
+            reverse('sentiment:show_sentiment_video_comment'))
+    texts = get_youtube_comment_data(video_ids)  # Getting the subtitles using get_subtitles method
+    if texts == '':  # Some basic validations
+        messages.error(request,
+                       'Please check whether the comments are disabled. Also, please check the url you entered.')  # adding the errors in messages list which will be shown in message.html template
+        return HttpResponseRedirect(
+            reverse('sentiment:show_sentiment_video_comment'))  # Redirecting to form page if there are any errors
+
+    if not (texts and not texts.isspace()):  # Some basic validations
+        messages.error(request,
+                       'Please check the comment settings or try after some time')  # adding the errors in messages list which will be shown in message.html template
+        return HttpResponseRedirect(
+            reverse('sentiment:show_sentiment_video_comment'))  # Redirecting to form page if there are any errors.
+
+    emotion_predictions, emotion_labels, subjectivity = sentiment_analysis(texts)
+
+    if emotion_predictions is None or emotion_labels is None or subjectivity['subjectivity'] == '':
+        messages.error(request,
+                       'We are a facing some issue. Please try again later')  # adding the errors in messages list which will be shown in message.html template
+        return HttpResponseRedirect(
+            reverse('sentiment:show_sentiment_video_comment'))  # Redirecting to form page if there are any errors.
+
+    context = {  # setting the context with our data
+        'labels': emotion_labels,
+        'probabilities': emotion_predictions,
+        'subjectivity': subjectivity['subjectivity']
+    }
+
+    return render(request, 'sentiment/results_sentiment.html',
                   context=context)  # rendering template with out data using jinja template eng

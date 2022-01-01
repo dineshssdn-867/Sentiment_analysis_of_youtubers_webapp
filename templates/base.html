@@ -1,6 +1,5 @@
 {% load static %}
 {% load pwa %}
-
 <!doctype html>
 <html class="no-js' %}" lang="zxx">
 <head>
@@ -48,17 +47,22 @@
                     <div class="menu-wrapper">
                         <!-- Logo -->
                         <div class="logo">
-                            <a href="{% url 'sentiment:home' %}"><img src="{% static '/assets/img/hero/YouTuber_Sentiment.png' %}"  width="235" height="69" alt="logo"></a>
+                            <a href="{% url 'sentiment:home' %}"><img src="{% static '/assets/img/hero/YouTuber_Sentiment.png' %}" class="mt-1"  width="235" height="69" alt="logo"></a>
                         </div>
                         <!-- Main-menu -->
                         <div class="main-menu d-none d-md-block">
                             <nav>
                                 <ul id="navigation">
                                     <li><a href="{% url 'sentiment:home' %}"><span>Home</span></a></li>
-                                    <li><a href="{% url 'sentiment:show_emotion' %}"><span>Emotion Analysis</span></a></li>
-                                    <!-- <li><a href="{% url 'sentiment:show_intent' %}"><span>Intent Analysis</span></a></li> -->
-                                    <li><a href="{% url 'sentiment:show_emotion_video_comment' %}"><span>Sentiment of video comments</span></a></li>
-                                    <!-- <li><a href="{% url 'sentiment:show_intent_video_comment' %}"><span>Intent of video comments</span></a></li> -->
+                                    <li class="dropdown" data-toggle="dropdown"><a href="#"><span>Types of Analysis</span></a></li>
+                                     <div class="dropdown-menu">
+                                       <a class="dropdown-item" href="{% url 'sentiment:show_emotion' %}">Emotion Analysis</a>
+                                       <a class="dropdown-item" href="{% url 'sentiment:show_emotion_video' %}">Emotion Analysis of video</a>
+                                       <a class="dropdown-item" href="{% url 'sentiment:show_emotion_video_comment' %}">Emotion Analysis of video comments</a>
+                                       <a class="dropdown-item" href="{% url 'sentiment:show_sentiment' %}">Sentiment Analysis</a>
+                                       <a class="dropdown-item" href="{% url 'sentiment:show_sentiment_video' %}">Sentiment Analysis of video</a>
+                                       <a class="dropdown-item" href="{% url 'sentiment:show_sentiment_video_comment' %}">Sentiment Analysis of video comments</a>
+                                    </div>
                                     <li><a href="{% url 'aboutus:about' %}"><span>About Us</span></a></li>
                                     {% if user.is_authenticated %}
                                     <li> <a href="#"><span>Hi {{user.username}}</span></a></li>
@@ -117,12 +121,12 @@
                                 <h4>Quick Links</h4>
                                 <ul>
                                     <li><a href="{% url 'sentiment:home' %}">Home</a></li>
-                                    <li><a href="{% url 'sentiment:show_emotion' %}">Emotion Sentiment</a></li>
-                                    <!-- <li><a href="{% url 'sentiment:show_intent' %}">Intent Analysis</a></li> -->
+                                    <li><a href="{% url 'sentiment:show_emotion' %}">Emotion Analysis</a></li>
                                     <li><a href="{% url 'sentiment:show_emotion_video' %}">Emotion Analysis of video</a></li>
-                                    <!-- <li><a href="{% url 'sentiment:show_intent_video' %}">Intent Analysis of video</a></li> -->
-                                    <li><a href="{% url 'sentiment:show_emotion_video_comment' %}">Sentiment of video comments</span></a></li>
-                                    <!-- <li><a href="{% url 'sentiment:show_intent_video_comment' %}">Intent of video comments</a></li> -->
+                                    <li><a href="{% url 'sentiment:show_emotion_video_comment' %}">Emotion Analysis of video comments</span></a></li>
+                                    <li><a href="{% url 'sentiment:show_sentiment' %}">Sentiment Analysis</a></li>
+                                    <li><a href="{% url 'sentiment:show_sentiment_video' %}">Sentiment Analysis of video</a></li>
+                                    <li><a href="{% url 'sentiment:show_sentiment_video_comment' %}">Sentiment Analysis of video comments</span></a></li>
                                     <li><a href="{% url 'aboutus:about' %}">About Us</a></li>
                                 </ul>
                             </div>

@@ -2,8 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="44b3fdd4-81e2-4b9b-b8d7-0929c8d44e93" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentiment_analysis_of_youtubers/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sentiment_analysis_of_youtubers/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sentiment/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentiment/preprocess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sentiment/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentiment/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sentiment/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentiment/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sentiment/youtube.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentiment/youtube.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/css/slicknav.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/assets/css/slicknav.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/sentiment/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sentiment/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,11 +39,16 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/sentiment" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Dinesh\Desktop\Sentiment-1\templates" />
+      <recent name="C:\Users\Dinesh\Desktop\Sentiment-1\templates\sentiment" />
       <recent name="C:\Users\Dinesh\Desktop\Sentiment-1\sentiment" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Dinesh\Desktop\Sentiment-1\templates\sentiment" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -68,7 +81,9 @@
       <workItem from="1640529589856" duration="13000" />
       <workItem from="1640589721992" duration="6911000" />
       <workItem from="1640614658037" duration="242000" />
-      <workItem from="1640615381281" duration="86000" />
+      <workItem from="1640615381281" duration="797000" />
+      <workItem from="1640663625963" duration="11000" />
+      <workItem from="1641003395579" duration="13071000" />
     </task>
     <servers />
   </component>
