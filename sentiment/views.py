@@ -18,8 +18,8 @@ from .retrieve_data import get_video_id
 API = config('API')
 
 
-# @method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
-# @method_decorator(cache_page(int(60 * .167), cache="cache1"), name='dispatch')
+@method_decorator(vary_on_headers('User-Agent', 'Cookie'), name='dispatch')
+@method_decorator(cache_page(int(60 * .167), cache="cache1"), name='dispatch')
 class HomeView(TemplateView):  # Initializing template for template view
     template_name = 'sentiment/index.html'
 

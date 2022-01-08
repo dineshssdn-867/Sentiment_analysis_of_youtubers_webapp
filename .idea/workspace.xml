@@ -2,21 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="44b3fdd4-81e2-4b9b-b8d7-0929c8d44e93" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Sentiment_analysis_of_youtubers/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sentiment_analysis_of_youtubers/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sentiment/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentiment/preprocess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sentiment/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentiment/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sentiment/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentiment/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sentiment/youtube.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentiment/youtube.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/assets/css/slicknav.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/assets/css/slicknav.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sentiment/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sentiment/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -83,7 +85,9 @@
       <workItem from="1640614658037" duration="242000" />
       <workItem from="1640615381281" duration="797000" />
       <workItem from="1640663625963" duration="11000" />
-      <workItem from="1641003395579" duration="13071000" />
+      <workItem from="1641003395579" duration="14007000" />
+      <workItem from="1641536244498" duration="8826000" />
+      <workItem from="1641658494248" duration="3969000" />
     </task>
     <servers />
   </component>
