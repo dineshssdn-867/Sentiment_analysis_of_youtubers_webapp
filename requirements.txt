@@ -7,7 +7,7 @@ chardet==3.0.4
 charset-normalizer==2.0.6
 click==8.0.1
 cryptography==3.4.8
-deep-translator==1.5.5
+deep-translator==1.6.0
 Deprecated==1.2.13
 dj-database-url==0.5.0
 Django==3.2.7
