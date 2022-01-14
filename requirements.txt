@@ -18,7 +18,7 @@ cchardet==2.1.7
 click==7.1.2
 cycler==0.10.0
 decorator==4.4.2
-Django==3.2.5
+Django==3.2.11
 django-htmlmin==0.11.0
 django-pwa==1.0.10
 fastprogress==1.0.0
