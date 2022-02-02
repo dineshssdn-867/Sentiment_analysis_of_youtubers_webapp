@@ -15,6 +15,7 @@ django-appconf==1.0.4
 django-bmemcached==0.3.0
 django-compression-middleware==0.4.1
 django-compressor==2.4.1
+django-cors-headers==3.11.0
 django-heroku==0.3.1
 django-pwa==1.0.10
 gcloud==0.18.3

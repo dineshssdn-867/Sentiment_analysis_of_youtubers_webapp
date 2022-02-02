@@ -159,5 +159,7 @@ Sentiment.pgerd
 storage_article.txt
 intents_urls
 intents_views.txt
+static
+staticfiles
 
 # End of https://www.toptal.com/developers/gitignore/api/django

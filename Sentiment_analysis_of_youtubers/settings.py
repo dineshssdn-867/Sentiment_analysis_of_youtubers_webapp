@@ -42,11 +42,13 @@ INSTALLED_APPS = [
     'sentiment',
     'users',
     "compressor",
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -55,8 +57,24 @@ MIDDLEWARE = [
     'django.middleware.http.ConditionalGetMiddleware',
     'compression_middleware.middleware.CompressionMiddleware',
     'django.middleware.gzip.GZipMiddleware',
-
 ]
+
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'accept-encoding',
+    'x-csrftoken',
+    'access-control-allow-origin',
+    'content-disposition'
+)
+CORS_ALLOW_CREDENTIALS = False
+CORS_ALLOW_METHODS = ('GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS')
+
 
 ROOT_URLCONF = 'Sentiment_analysis_of_youtubers.urls'
 
@@ -139,7 +157,7 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_HOST = config('DJANGO_STATIC_HOST')
-STATIC_URL = '/static/'
+STATIC_URL = 'https://sentiment-64808.web.app/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
@@ -243,8 +261,8 @@ PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'en-US'
 PWA_APP_DEBUG_MODE = True
 
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
-django_heroku.settings(locals())
-del DATABASES['default']['OPTIONS']['sslmode']
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
+# django_heroku.settings(locals())
+# del DATABASES['default']['OPTIONS']['sslmode']
