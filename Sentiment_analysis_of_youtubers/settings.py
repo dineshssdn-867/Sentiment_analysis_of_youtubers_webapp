@@ -156,7 +156,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_HOST = config('DJANGO_STATIC_HOST')
 STATIC_URL = 'https://sentiment-64808.web.app/static/'
 
 STATICFILES_DIRS = [
