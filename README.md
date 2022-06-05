@@ -77,6 +77,7 @@ You can register as a user(youtuber)
 
 <details>
   <summary>For Yotubers Video</summary>
+  
   - Get to know the info of emotions of individual videos.
   - Get to know the info of intents of individual videos.
   - Visualize results of emotions
@@ -85,6 +86,7 @@ You can register as a user(youtuber)
 
 <details>
   <summary>For Yotubers Video Comments</summary>
+  
   - Get to know the info of emotions of individual video comments.
   - Get to know the info of intents of individual videos comments.
   - Visualize results of emotions
