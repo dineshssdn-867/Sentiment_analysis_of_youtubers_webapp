@@ -1,4 +1,5 @@
 asgiref==3.4.1
+backports.zoneinfo==0.2.1
 beautifulsoup4==4.10.0
 Brotli==1.0.9
 certifi==2021.5.30
@@ -10,7 +11,7 @@ cryptography==3.4.8
 deep-translator==1.6.0
 Deprecated==1.2.13
 dj-database-url==0.5.0
-Django==3.2.7
+Django==4.0.5
 django-appconf==1.0.4
 django-bmemcached==0.3.0
 django-compression-middleware==0.4.1
