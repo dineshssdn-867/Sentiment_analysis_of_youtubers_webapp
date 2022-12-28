@@ -14,10 +14,6 @@
 
 Personal Project - Youtubers Sentiment
 
-## Demo💻
-
-[Demo](https://youtuberssentiment.herokuapp.com/)
-
 ## Environment Variables⚙
 
 To run this project, you will need to add the following environment variables to a .env file at the root of the project
